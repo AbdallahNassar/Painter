@@ -1,3 +1,3 @@
 class Constants {
-  static const double lineStrokeWidth = 7.0;
+  static const String appTitle = 'Painter';
 }

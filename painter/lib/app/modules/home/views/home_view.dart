@@ -3,27 +3,50 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:painter/app/core/utils/values/constants.dart';
 
-import 'package:painter/app/modules/widgets/my_painter.dart';
 import 'package:painter/app/theme/app_theme.dart';
+import 'package:painter/app/modules/home/widgets/my_painter.dart';
+
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     //================================ Parameters ==============================
-    final MediaQueryData _mediaQuery = MediaQuery.of(context);
-    print(_mediaQuery.size.width);
-    print(_mediaQuery.size.height);
+
     //==========================================================================
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Painter',
-          style: AppTheme.appTheme.textTheme.headline4,
-        ),
+        backgroundColor: AppTheme.appTheme.appBarTheme.backgroundColor,
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        title: Text(
+          Constants.appTitle,
+          style: AppTheme.appTheme.appBarTheme.titleTextStyle,
+        ),
+        actions: [
+          Tooltip(
+            message: 'REDO',
+            child: IconButton(
+              icon: Icon(
+                Icons.undo,
+                size: 30.0,
+              ),
+              onPressed: controller.redo,
+            ),
+          ),
+          Tooltip(
+            message: 'UNDO',
+            child: IconButton(
+              icon: Icon(
+                Icons.redo,
+                size: 30.0,
+              ),
+              onPressed: controller.undo,
+            ),
+          ),
+        ],
+        actionsIconTheme: AppTheme.appTheme.appBarTheme.actionsIconTheme,
       ),
       body: SafeArea(
         child: GestureDetector(
