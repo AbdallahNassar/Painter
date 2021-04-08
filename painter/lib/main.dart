@@ -13,7 +13,7 @@ class Painter extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: "Painter",
-      initialRoute: AppPages.HOME,
+      initialRoute: AppPages.HomeName,
       getPages: AppPages.routes,
       debugShowCheckedModeBanner: false,
     );

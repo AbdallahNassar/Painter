@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 
 import 'package:painter/app/core/utils/values/constants.dart';
 import 'package:painter/app/modules/home/widgets/custom_fab.dart';
+import 'package:painter/app/modules/settings/views/settings_view.dart';
+import 'package:painter/app/routes/app_pages.dart';
 import 'package:painter/app/theme/app_theme.dart';
 import 'package:painter/app/modules/home/widgets/my_painter.dart';
 import '../controllers/home_controller.dart';
@@ -17,20 +19,28 @@ class HomeView extends GetView<HomeController> {
     //==========================================================================
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppTheme.appTheme.appBarTheme.backgroundColor,
-        centerTitle: true,
+        // backgroundColor: AppTheme.appTheme.appBarTheme.backgroundColor,
+        // centerTitle: true,
         title: Text(
           Constants.appTitle,
-          style: AppTheme.appTheme.appBarTheme.titleTextStyle,
+          // style: AppTheme.appTheme.textTheme.headline6,
         ),
-        actionsIconTheme: AppTheme.appTheme.appBarTheme.actionsIconTheme,
-        elevation: 1.0,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.face),
-            onPressed: () => controller.setPointMode = PointMode.points,
-          )
-        ],
+        // actionsIconTheme: AppTheme.appTheme.appBarTheme.actionsIconTheme,
+        // elevation: 1.0,
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.face),
+        //     onPressed: () => controller.setPointMode = PointMode.points,
+        //   ),
+        //   IconButton(
+        //     icon: Icon(Icons.settings),
+        //     onPressed: () async => await Get.to(
+        //       () => SettingsView(),
+        //       transition: Transition.cupertino,
+        //       duration: Duration(milliseconds: 400),
+        //     ),
+        //   )
+        // ],
       ),
       body: SafeArea(
         child: GestureDetector(
