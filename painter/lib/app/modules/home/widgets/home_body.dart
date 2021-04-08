@@ -19,7 +19,6 @@ class HomeBody extends StatelessWidget {
         // to only draw in it's specified area [respect appbar and bottom]
         if (details.localPosition.direction > 0.0)
           controller.addPoint = details.localPosition;
-        // controller.addPoint = details.localPosition;
       },
       onPanUpdate: (details) {
         if (details.localPosition.direction > 0.0)
@@ -32,7 +31,6 @@ class HomeBody extends StatelessWidget {
       child: Obx(
         () => CustomPaint(
           painter: MyPainter(
-            // [toList] and [value] to subscribe to the value of the RxVariable
             pointsList: controller.pointsList,
             pointMode: controller.pointsMode,
             strokeWidth: controller.strokeWidth,
@@ -41,7 +39,7 @@ class HomeBody extends StatelessWidget {
           // take all the available space
           size: Size.infinite,
           isComplex: true,
-          willChange: false,
+          willChange: true,
         ),
       ),
     );
