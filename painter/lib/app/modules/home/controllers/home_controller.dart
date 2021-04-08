@@ -45,10 +45,14 @@ class HomeController extends GetxController {
   bool get isUndoActive => _pointsList.isNotEmpty;
   bool get isRedoActive => _trashList.isNotEmpty;
   bool get isRestoreActive => (_pointsList.isEmpty && _trashList.isNotEmpty);
+  // this will hold the time difference of the last entry in list and the new, and if that
+  // difference between two entries exceedes [100 milliseconds] then the user has lift
+  // his fingers and I should call [Add Equalizing point]
+  // var _lastEntryMillisecondsDifference;
   //============================================================================
-  set addPoint(Offset point) {
-    print('$point' + ', length = ${_pointsList.length + 1}');
+  void addPoint({required Offset point, required DateTime entryTime}) {
     _pointsList.add(point);
+    print('$point' + ', length = ${_pointsList.length}');
   }
 
   //============================================================================
@@ -60,7 +64,10 @@ class HomeController extends GetxController {
   // end of the list .. if the length is even, do nothing
   void addEqualizingPoint() {
     if (_pointsList.length.isOdd) {
-      addPoint = _pointsList.last.translate(3.0, 3.0);
+      addPoint(
+        point: _pointsList.last.translate(3.0, 3.0),
+        entryTime: DateTime.now(),
+      );
     }
   }
 
@@ -96,6 +103,11 @@ class HomeController extends GetxController {
   void restore() {
     _pointsList.value = List.from(_trashList);
     _trashList.clear();
+  }
+
+  //============================================================================
+  set setPointMode(PointMode newVal) {
+    _pointsMode.value = newVal;
   }
   //============================================================================
 

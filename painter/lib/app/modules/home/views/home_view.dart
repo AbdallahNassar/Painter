@@ -25,25 +25,29 @@ class HomeView extends GetView<HomeController> {
         ),
         actionsIconTheme: AppTheme.appTheme.appBarTheme.actionsIconTheme,
         elevation: 1.0,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.face),
+            onPressed: () => controller.setPointMode = PointMode.points,
+          )
+        ],
       ),
       body: SafeArea(
         child: GestureDetector(
           onPanStart: (details) {
             // to only draw in it's specified area [respect appbar and bottom]
             if (details.localPosition.direction > 0.0) {
-              controller.addPoint = details.localPosition;
-              // controller.addPoint = details.localPosition;
-              // controller.addPoint = details.localPosition.translate(3.0, 3.0);
+              controller.addPoint(
+                  entryTime: DateTime.now(), point: details.localPosition);
             }
           },
           onPanUpdate: (details) {
             if (details.localPosition.direction > 0.0) {
-              // controller.addPoint = details.globalPosition;
-              controller.addPoint = details.localPosition;
+              controller.addPoint(
+                  entryTime: DateTime.now(), point: details.localPosition);
             }
           },
-          onPanEnd: (_) => controller.addEqualizingPoint(),
-          onPanCancel: () => print('enDD'),
+          // onPanEnd: (_) => controller.addEqualizingPoint(),
           child: Obx(
             () => CustomPaint(
               painter: MyPainter(
@@ -55,7 +59,7 @@ class HomeView extends GetView<HomeController> {
               // take all the available space
               size: Size.infinite,
               isComplex: true,
-              willChange: false,
+              willChange: true,
             ),
           ),
         ),

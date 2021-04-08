@@ -19,7 +19,6 @@ class CustomFAB extends GetView<HomeController> {
       animatedIcon: AnimatedIcons.menu_close,
       animatedIconTheme: IconThemeData(color: Colors.white),
       animationSpeed: 350,
-      closeManually: true,
       curve: Curves.fastLinearToSlowEaseIn,
       tooltip: 'Tools',
       children: [
