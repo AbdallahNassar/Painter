@@ -1,13 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:painter/app/core/utils/values/constants.dart';
 
+import 'package:painter/app/core/utils/values/constants.dart';
+import 'package:painter/app/modules/home/widgets/custom_fab.dart';
 import 'package:painter/app/theme/app_theme.dart';
 import 'package:painter/app/modules/home/widgets/my_painter.dart';
-
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -24,28 +23,6 @@ class HomeView extends GetView<HomeController> {
           Constants.appTitle,
           style: AppTheme.appTheme.appBarTheme.titleTextStyle,
         ),
-        actions: [
-          Tooltip(
-            message: 'REDO',
-            child: IconButton(
-              icon: Icon(
-                Icons.undo,
-                size: 30.0,
-              ),
-              onPressed: controller.redo,
-            ),
-          ),
-          Tooltip(
-            message: 'UNDO',
-            child: IconButton(
-              icon: Icon(
-                Icons.redo,
-                size: 30.0,
-              ),
-              onPressed: controller.undo,
-            ),
-          ),
-        ],
         actionsIconTheme: AppTheme.appTheme.appBarTheme.actionsIconTheme,
       ),
       body: SafeArea(
@@ -79,10 +56,7 @@ class HomeView extends GetView<HomeController> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: controller.clearPoints,
-        child: Icon(Icons.cleaning_services),
-      ),
+      floatingActionButton: CustomFAB(),
     );
   }
 }

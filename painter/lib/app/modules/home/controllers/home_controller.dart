@@ -7,7 +7,9 @@ class HomeController extends GetxController {
   //================================ Properties ================================
   var _pointsList = <Offset>[].obs;
   // this will hold the deleted points, for later redoing.
-  var _trashList = <Offset>[];
+  // this was made into [obs] to allow the 'isRedoActive' to update
+  // automagically when the [trashlist] length change
+  var _trashList = <Offset>[].obs;
   // these are '.obs' to rebuild the entire UI from the settings menu
   var _pointsMode = PointMode.lines.obs;
   var _strokeWitdth = 5.0.obs;
@@ -38,6 +40,11 @@ class HomeController extends GetxController {
   PointMode get pointsMode => _pointsMode.value;
   double get strokeWidth => _strokeWitdth.value;
   Color get color => _color.value;
+  // these will be reactive as they will automagically change when the
+  // lists lengths change.
+  bool get isUndoActive => _pointsList.isNotEmpty;
+  bool get isRedoActive => _trashList.isNotEmpty;
+  bool get isRestoreActive => (_pointsList.isEmpty && _trashList.isNotEmpty);
   //============================================================================
   set addPoint(Offset point) {
     print(point);
@@ -56,19 +63,26 @@ class HomeController extends GetxController {
 
   //============================================================================
   void clearPoints() {
+    print('is trash empty ? ${_trashList.isEmpty}');
+    _trashList.value = List.from(_pointsList);
     _pointsList.clear();
+    print('is trash empty ? ${_trashList.isEmpty}');
   }
 
   //============================================================================
   void undo() {
-    if (_pointsList.length == 0) return;
     _trashList.add(_pointsList.removeLast());
   }
 
   //============================================================================
   void redo() {
-    if (_trashList.length == 0) return;
     _pointsList.add(_trashList.removeLast());
+  }
+
+  //============================================================================
+  void restore() {
+    _pointsList.value = List.from(_trashList);
+    _trashList.clear();
   }
   //============================================================================
 
