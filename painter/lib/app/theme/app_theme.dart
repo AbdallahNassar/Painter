@@ -13,7 +13,10 @@ class AppTheme {
     ),
     appBarTheme: AppBarTheme(
       titleTextStyle: TextStyle(
-          color: Colors.black, fontWeight: FontWeight.bold, fontSize: 30.0),
+        color: Colors.deepPurple.shade900,
+        fontWeight: FontWeight.bold,
+        fontSize: 25.0,
+      ),
       backgroundColor: AppColors.scaffoldBacgroundColor,
       iconTheme: IconThemeData(
         color: Colors.black,

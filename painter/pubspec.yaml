@@ -30,7 +30,7 @@ dependencies:
   animated_text_kit: ^4.1.1
 
   # add circular fab
-  fab_circular_menu: ^1.0.2
+  flutter_speed_dial: ^3.0.5
 
   # Color picker
   flutter_colorpicker: ^0.4.0
