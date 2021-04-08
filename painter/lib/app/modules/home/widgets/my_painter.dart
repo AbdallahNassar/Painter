@@ -17,9 +17,12 @@ class MyPainter extends CustomPainter {
     required this.color,
   }) {
     _paint = Paint()
+      // making antiAlias 'false' will vastly improve performance when there are
+      // thousands of points to paint
+      ..isAntiAlias = false
       ..strokeWidth = strokeWidth
-      ..isAntiAlias = true
       ..style = PaintingStyle.fill
+      ..strokeCap = StrokeCap.round
       ..color = color;
   }
   //============================================================================

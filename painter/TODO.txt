@@ -1,0 +1,9 @@
+=> add app drawer
+=> add setting to change everything 
+=> add color palette
+=> add fab
+=> add local storage
+=> add Icon
+=> add splash screen
+=> add different pens
+

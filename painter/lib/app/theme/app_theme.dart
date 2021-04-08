@@ -15,7 +15,8 @@ class AppTheme {
       titleTextStyle: TextStyle(
         color: Colors.deepPurple.shade900,
         fontWeight: FontWeight.bold,
-        fontSize: 25.0,
+        fontSize: 27.0,
+        fontFamily: 'Nunito',
       ),
       backgroundColor: AppColors.scaffoldBacgroundColor,
       iconTheme: IconThemeData(

@@ -4,6 +4,14 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:painter/app/modules/home/controllers/home_controller.dart';
 
 class CustomFAB extends GetView<HomeController> {
+  //================================= Methods ==================================
+  TextStyle _fabTextStyle() => TextStyle(
+        fontSize: 16.0,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Nunito',
+      );
+
+  //============================================================================
   @override
   Widget build(BuildContext context) {
     return SpeedDial(
@@ -11,13 +19,12 @@ class CustomFAB extends GetView<HomeController> {
       animatedIcon: AnimatedIcons.menu_close,
       animatedIconTheme: IconThemeData(color: Colors.white),
       animationSpeed: 350,
-      closeManually: true,
       curve: Curves.fastLinearToSlowEaseIn,
       tooltip: 'Tools',
       children: [
         SpeedDialChild(
           label: 'UNDO',
-          labelStyle: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+          labelStyle: _fabTextStyle(),
           child: Obx(
             () => IconButton(
               icon: Icon(
@@ -30,7 +37,7 @@ class CustomFAB extends GetView<HomeController> {
         ),
         SpeedDialChild(
           label: 'Redo',
-          labelStyle: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+          labelStyle: _fabTextStyle(),
           child: Obx(
             () => IconButton(
               icon: Icon(
@@ -43,7 +50,7 @@ class CustomFAB extends GetView<HomeController> {
         ),
         SpeedDialChild(
           label: 'Clear',
-          labelStyle: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+          labelStyle: _fabTextStyle(),
           child: Obx(
             () => IconButton(
               icon: Icon(
@@ -56,7 +63,7 @@ class CustomFAB extends GetView<HomeController> {
         ),
         SpeedDialChild(
           label: 'Restore',
-          labelStyle: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+          labelStyle: _fabTextStyle(),
           child: Obx(
             () => IconButton(
               icon: Icon(Icons.restore),
