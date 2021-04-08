@@ -25,7 +25,7 @@ class MyPainter extends CustomPainter {
   //============================================================================
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawPoints(PointMode.points, pointsList, _paint);
+    canvas.drawPoints(pointMode, pointsList, _paint);
   }
 
   @override
