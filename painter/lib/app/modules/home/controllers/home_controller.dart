@@ -47,8 +47,21 @@ class HomeController extends GetxController {
   bool get isRestoreActive => (_pointsList.isEmpty && _trashList.isNotEmpty);
   //============================================================================
   set addPoint(Offset point) {
-    print(point);
+    print('$point' + ', length = ${_pointsList.length + 1}');
     _pointsList.add(point);
+  }
+
+  //============================================================================
+  // when I draw for a while, a.k.a [pan update], and then stop, then press
+  // on a different point, a line is drawn from the point area I stopped at
+  // and the new point, and this behaviour is not preferrable
+
+  // SOLUTION: if the length of points list is odd, add a new a point at the
+  // end of the list .. if the length is even, do nothing
+  void addEqualizingPoint() {
+    if (_pointsList.length.isOdd) {
+      addPoint = _pointsList.last.translate(3.0, 3.0);
+    }
   }
 
   //============================================================================

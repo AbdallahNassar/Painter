@@ -24,22 +24,26 @@ class HomeView extends GetView<HomeController> {
           style: AppTheme.appTheme.appBarTheme.titleTextStyle,
         ),
         actionsIconTheme: AppTheme.appTheme.appBarTheme.actionsIconTheme,
+        elevation: 1.0,
       ),
       body: SafeArea(
         child: GestureDetector(
           onPanStart: (details) {
             // to only draw in it's specified area [respect appbar and bottom]
-            if (details.localPosition.direction > 0.0)
+            if (details.localPosition.direction > 0.0) {
               controller.addPoint = details.localPosition;
+              // controller.addPoint = details.localPosition;
+              // controller.addPoint = details.localPosition.translate(3.0, 3.0);
+            }
           },
           onPanUpdate: (details) {
-            if (details.localPosition.direction > 0.0)
+            if (details.localPosition.direction > 0.0) {
+              // controller.addPoint = details.globalPosition;
               controller.addPoint = details.localPosition;
+            }
           },
-          onPanDown: (details) {
-            if (details.localPosition.direction > 0.0)
-              controller.addPoint = details.localPosition;
-          },
+          onPanEnd: (_) => controller.addEqualizingPoint(),
+          onPanCancel: () => print('enDD'),
           child: Obx(
             () => CustomPaint(
               painter: MyPainter(
