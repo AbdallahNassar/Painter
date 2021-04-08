@@ -17,7 +17,11 @@ class CustomFAB extends GetView<HomeController> {
       children: [
         SpeedDialChild(
           label: 'UNDO',
-          labelStyle: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+          labelStyle: TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Nunito',
+          ),
           child: Obx(
             () => IconButton(
               icon: Icon(
@@ -30,7 +34,11 @@ class CustomFAB extends GetView<HomeController> {
         ),
         SpeedDialChild(
           label: 'Redo',
-          labelStyle: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+          labelStyle: TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Nunito',
+          ),
           child: Obx(
             () => IconButton(
               icon: Icon(
@@ -43,7 +51,11 @@ class CustomFAB extends GetView<HomeController> {
         ),
         SpeedDialChild(
           label: 'Clear',
-          labelStyle: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+          labelStyle: TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Nunito',
+          ),
           child: Obx(
             () => IconButton(
               icon: Icon(
@@ -56,7 +68,11 @@ class CustomFAB extends GetView<HomeController> {
         ),
         SpeedDialChild(
           label: 'Restore',
-          labelStyle: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+          labelStyle: TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Nunito',
+          ),
           child: Obx(
             () => IconButton(
               icon: Icon(Icons.restore),
