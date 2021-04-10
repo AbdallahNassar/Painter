@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:painter/app/core/theme/app_colors.dart';
 import 'package:painter/app/modules/home/controllers/home_controller.dart';
 
 class CustomFAB extends GetView<HomeController> {
@@ -14,64 +15,98 @@ class CustomFAB extends GetView<HomeController> {
   //============================================================================
   @override
   Widget build(BuildContext context) {
-    return SpeedDial(
-      backgroundColor: Colors.deepPurple.shade900,
-      animatedIcon: AnimatedIcons.menu_close,
-      animatedIconTheme: IconThemeData(color: Colors.white),
-      animationSpeed: 350,
-      curve: Curves.fastLinearToSlowEaseIn,
-      tooltip: 'Tools',
-      children: [
-        SpeedDialChild(
-          label: 'UNDO',
-          labelStyle: _fabTextStyle(),
-          child: Obx(
-            () => IconButton(
-              icon: Icon(
-                Icons.undo,
-                size: 30.0,
+    // [RotatedBox] to make the [FAB] open horizontaly.
+    return RotatedBox(
+      quarterTurns: 3,
+      child: SpeedDial(
+        backgroundColor: Colors.deepPurple.shade900,
+        animatedIcon: AnimatedIcons.menu_close,
+        child: Icon(Icons.ac_unit),
+        animatedIconTheme: IconThemeData(color: Colors.white),
+        animationSpeed: 250,
+        curve: Curves.fastLinearToSlowEaseIn,
+        tooltip: 'Tools',
+        children: [
+          SpeedDialChild(
+            backgroundColor: AppColors.scaffoldBacgroundColor,
+            labelStyle: _fabTextStyle(),
+            child: RotatedBox(
+              quarterTurns: 1,
+              child: Obx(
+                () => IconButton(
+                  icon: Icon(
+                    Icons.remove_circle,
+                    size: 30.0,
+                  ),
+                  onPressed: controller.isUndoActive ? controller.erase : null,
+                ),
               ),
-              onPressed: controller.isUndoActive ? controller.undo : null,
             ),
           ),
-        ),
-        SpeedDialChild(
-          label: 'Redo',
-          labelStyle: _fabTextStyle(),
-          child: Obx(
-            () => IconButton(
-              icon: Icon(
-                Icons.redo,
-                size: 30.0,
+          SpeedDialChild(
+            backgroundColor: AppColors.scaffoldBacgroundColor,
+            labelStyle: _fabTextStyle(),
+            child: RotatedBox(
+              quarterTurns: 1,
+              child: Obx(
+                () => IconButton(
+                  icon: Icon(
+                    Icons.undo,
+                    size: 30.0,
+                  ),
+                  onPressed: controller.isUndoActive ? controller.undo : null,
+                ),
               ),
-              onPressed: controller.isRedoActive ? controller.redo : null,
             ),
           ),
-        ),
-        SpeedDialChild(
-          label: 'Clear',
-          labelStyle: _fabTextStyle(),
-          child: Obx(
-            () => IconButton(
-              icon: Icon(
-                Icons.cleaning_services,
+          SpeedDialChild(
+            backgroundColor: AppColors.scaffoldBacgroundColor,
+            labelStyle: _fabTextStyle(),
+            child: RotatedBox(
+              quarterTurns: 1,
+              child: Obx(
+                () => IconButton(
+                  icon: Icon(
+                    Icons.redo,
+                    size: 30.0,
+                  ),
+                  onPressed: controller.isRedoActive ? controller.redo : null,
+                ),
               ),
-              onPressed:
-                  controller.isUndoActive ? controller.clearPoints : null,
             ),
           ),
-        ),
-        SpeedDialChild(
-          label: 'Restore',
-          labelStyle: _fabTextStyle(),
-          child: Obx(
-            () => IconButton(
-              icon: Icon(Icons.restore),
-              onPressed: controller.isRestoreActive ? controller.restore : null,
+          SpeedDialChild(
+            backgroundColor: AppColors.scaffoldBacgroundColor,
+            labelStyle: _fabTextStyle(),
+            child: RotatedBox(
+              quarterTurns: 1,
+              child: Obx(
+                () => IconButton(
+                  icon: Icon(
+                    Icons.cleaning_services,
+                  ),
+                  onPressed:
+                      controller.isUndoActive ? controller.clearPoints : null,
+                ),
+              ),
             ),
           ),
-        ),
-      ],
+          SpeedDialChild(
+            backgroundColor: AppColors.scaffoldBacgroundColor,
+            labelStyle: _fabTextStyle(),
+            child: RotatedBox(
+              quarterTurns: 1,
+              child: Obx(
+                () => IconButton(
+                  icon: Icon(Icons.restore),
+                  onPressed:
+                      controller.isRestoreActive ? controller.restore : null,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
