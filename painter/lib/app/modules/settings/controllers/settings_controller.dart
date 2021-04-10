@@ -1,9 +1,14 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SettingsController extends GetxController {
-  //TODO: Implement SettingsController
-
-  final count = 0.obs;
+  //================================ Properties ================================
+  var _strokeColor = Color(0xffffffff).obs;
+  var _pointsMode = PointMode.lines.obs;
+  var _strokeWitdth = 5.0.obs;
+  //================================= Methods ==================================
   @override
   void onInit() {
     super.onInit();
@@ -16,5 +21,25 @@ class SettingsController extends GetxController {
 
   @override
   void onClose() {}
-  void increment() => count.value++;
+
+  //================================= Getters ==================================
+  PointMode get pointsMode => _pointsMode.value;
+  double get strokeWidth => _strokeWitdth.value;
+  Color get strokeColor => _strokeColor.value;
+  //============================================================================
+  set setStrokeWidth(double val) {
+    _strokeWitdth.value = val;
+  }
+
+  //============================================================================
+  set setColor(Color val) {
+    _strokeColor.value = val;
+  }
+
+  //============================================================================
+  set setPointMode(PointMode newVal) {
+    _pointsMode.value = newVal;
+  }
+  //============================================================================
+
 }

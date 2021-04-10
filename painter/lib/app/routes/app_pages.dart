@@ -8,7 +8,8 @@ import 'package:painter/app/modules/settings/views/settings_view.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const HOME = Routes.HOME;
+  static const String HomeName = Routes.HOME;
+  static const String SettingsName = Routes.SETTINGS;
 
   static final routes = [
     GetPage(
