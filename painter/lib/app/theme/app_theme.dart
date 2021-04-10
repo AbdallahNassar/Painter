@@ -7,19 +7,19 @@ class AppTheme {
     scaffoldBackgroundColor: AppColors.scaffoldBacgroundColor,
     primaryTextTheme: TextTheme(
       button: TextStyle(fontSize: 30.0),
-      headline6: TextStyle(
+    ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: AppColors.scaffoldBacgroundColor,
+      titleTextStyle: TextStyle(
         color: Colors.deepPurple.shade900,
         fontWeight: FontWeight.bold,
         fontSize: 27.0,
         fontFamily: 'Nunito',
       ),
+      iconTheme: IconThemeData(
+        color: Colors.black,
+      ),
+      actionsIconTheme: IconThemeData(color: Colors.black),
     ),
-    // appBarTheme: AppBarTheme(
-    //   backgroundColor: AppColors.scaffoldBacgroundColor,
-    //   iconTheme: IconThemeData(
-    //     color: Colors.black,
-    //   ),
-    //   actionsIconTheme: IconThemeData(color: Colors.black),
-    // ),
   );
 }

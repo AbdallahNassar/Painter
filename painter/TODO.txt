@@ -1,6 +1,7 @@
+=> add color palette
+=> add eraser [flutter physics demo ]
 => add app drawer
 => add setting to change everything 
-=> add color palette
-=> add local storage
+=> add local storage [Home page will be a list view of previous paintings]
 => add different pens
 
