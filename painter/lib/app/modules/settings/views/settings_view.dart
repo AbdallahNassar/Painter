@@ -6,14 +6,6 @@ import 'package:get/get.dart';
 import '../controllers/settings_controller.dart';
 
 class SettingsView extends GetView<SettingsController> {
-  //================================ Properties ================================
-  var _currentColor = Color(0xffffffff).obs;
-
-  //================================ Constructor ===============================
-
-  //================================= Methods ==================================
-
-  //============================================================================
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,9 +30,9 @@ class SettingsView extends GetView<SettingsController> {
                         height: 50.0,
                       ),
                       ColorPicker(
-                        pickerColor: _currentColor.value,
+                        pickerColor: controller.strokeColor,
                         onColorChanged: (newColor) {
-                          _currentColor.value = newColor;
+                          controller.setColor = newColor;
                         },
                         showLabel: true,
                         displayThumbColor: true,
