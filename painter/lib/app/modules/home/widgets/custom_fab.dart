@@ -19,6 +19,7 @@ class CustomFAB extends GetView<HomeController> {
     return RotatedBox(
       quarterTurns: 3,
       child: SpeedDial(
+        shape: StadiumBorder(),
         backgroundColor: Colors.deepPurple.shade900,
         animatedIcon: AnimatedIcons.menu_close,
         child: Icon(Icons.ac_unit),
