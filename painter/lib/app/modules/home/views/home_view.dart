@@ -17,6 +17,9 @@ class HomeView extends GetView<HomeController> {
   //==========================================================================
   @override
   Widget build(BuildContext context) {
+    //================================ Parameters ==============================
+    final MediaQueryData _mediaQuery = MediaQuery.of(context);
+    //==========================================================================
     print('rebuilding home');
     return Scaffold(
       appBar: AppBar(
@@ -29,13 +32,6 @@ class HomeView extends GetView<HomeController> {
         actionsIconTheme: AppTheme.appTheme.appBarTheme.actionsIconTheme,
         elevation: 1.0,
         actions: [
-          IconButton(
-            icon: Icon(Icons.face),
-            onPressed: () => Get.updateLocale(
-              Locale('en', 'US'),
-              // Locale('en', 'US'),
-            ),
-          ),
           IconButton(
             icon: Icon(Icons.face),
             onPressed: () =>
@@ -87,11 +83,15 @@ class HomeView extends GetView<HomeController> {
           ),
         ),
       ),
-      // 'aspect ratio' is used to enable [rotated custom fab], If i try to
+      // 'Container' is used to enable [rotated custom fab], If i try to
       // put it in a FAB it does not work,
-      floatingActionButton: AspectRatio(
+      floatingActionButton: Container(
+        height: _mediaQuery.orientation == Orientation.portrait
+            ? _mediaQuery.size.height * 0.06
+            : _mediaQuery.size.width * 0.06,
+        width: double.infinity,
+        alignment: Alignment.bottomRight,
         child: CustomFAB(),
-        aspectRatio: 7,
       ),
     );
   }
