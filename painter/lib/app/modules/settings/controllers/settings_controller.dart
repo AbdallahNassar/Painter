@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class SettingsController extends GetxController {
   //================================ Properties ================================
   var _strokeColor = Color(0xff000000);
-  var _pointsMode = PointMode.lines.obs;
+  var _pointsMode = PointMode.points.obs;
   var _strokeWitdth = 5.0.obs;
   //================================= Methods ==================================
   @override

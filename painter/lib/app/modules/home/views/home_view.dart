@@ -3,11 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:painter/app/core/theme/app_theme.dart';
 
 import 'package:painter/app/modules/home/widgets/custom_fab.dart';
 import 'package:painter/app/modules/settings/controllers/settings_controller.dart';
-import 'package:painter/app/modules/settings/views/settings_view.dart';
 import 'package:painter/app/modules/home/widgets/my_painter.dart';
 import 'package:painter/app/widgets/custom_app_bar.dart';
 import '../controllers/home_controller.dart';
@@ -49,19 +47,15 @@ class HomeView extends GetView<HomeController> {
       body: SafeArea(
         child: GestureDetector(
           onPanStart: (details) {
-            // to only draw in it's specified area [respect appbar and bottom]
-            if (details.localPosition.direction > 0.0) {
-              controller.addPoint(
-                  entryTime: DateTime.now(), point: details.localPosition);
-            }
+            controller.drawingMode == DrawingMode.PAINT
+                ? controller.addPoint(details.localPosition)
+                : controller.erase(details.localPosition);
           },
           onPanUpdate: (details) {
-            if (details.localPosition.direction > 0.0) {
-              controller.addPoint(
-                  entryTime: DateTime.now(), point: details.localPosition);
-            }
+            controller.drawingMode == DrawingMode.PAINT
+                ? controller.addPoint(details.localPosition)
+                : controller.erase(details.localPosition);
           },
-          // onPanEnd: (_) => controller.addEqualizingPoint(),
           child: Obx(
             () => CustomPaint(
               painter: MyPainter(

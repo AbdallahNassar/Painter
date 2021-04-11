@@ -33,15 +33,15 @@ class CustomFAB extends GetView<HomeController> {
             labelStyle: _fabTextStyle(),
             child: RotatedBox(
               quarterTurns: 1,
-              child: Obx(
-                () => IconButton(
-                  icon: Icon(
-                    Icons.remove_circle,
-                    size: 30.0,
-                  ),
-                  onPressed: controller.isUndoActive ? controller.erase : null,
-                ),
-              ),
+              // child: Obx(
+              //   () => IconButton(
+              //     icon: Icon(
+              //       Icons.remove_circle,
+              //       size: 30.0,
+              //     ),
+              //     onPressed: controller.isUndoActive ? controller.erase : null,
+              //   ),
+              // ),
             ),
           ),
           SpeedDialChild(
