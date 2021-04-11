@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 import 'package:get/get.dart';
+import 'package:painter/app/core/theme/app_theme.dart';
+import 'package:painter/app/widgets/custom_app_bar.dart';
 
 import '../controllers/settings_controller.dart';
 
@@ -9,9 +11,8 @@ class SettingsView extends GetView<SettingsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('SettingsView'),
-        centerTitle: true,
+      appBar: CustomAppBar(
+        text: 'settings_view_title'.tr,
       ),
       body: Center(
         child: TextButton(
