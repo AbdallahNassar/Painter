@@ -1,4 +1,5 @@
 => add color palette
+=> add different colors 
 => add eraser [flutter physics demo ]
 => add app drawer
 => add setting to change everything 
