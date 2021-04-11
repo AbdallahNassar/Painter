@@ -9,6 +9,7 @@ import 'package:painter/app/modules/home/widgets/custom_fab.dart';
 import 'package:painter/app/modules/settings/controllers/settings_controller.dart';
 import 'package:painter/app/modules/settings/views/settings_view.dart';
 import 'package:painter/app/modules/home/widgets/my_painter.dart';
+import 'package:painter/app/widgets/custom_app_bar.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -22,35 +23,29 @@ class HomeView extends GetView<HomeController> {
     //==========================================================================
     print('rebuilding home');
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppTheme.appTheme.appBarTheme.backgroundColor,
-        centerTitle: true,
-        title: Text(
-          'home_view_title'.tr,
-          style: AppTheme.appTheme.appBarTheme.titleTextStyle,
-        ),
-        actionsIconTheme: AppTheme.appTheme.appBarTheme.actionsIconTheme,
-        elevation: 1.0,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.face),
-            onPressed: () =>
-                _settingsController.setPointMode = PointMode.points,
-          ),
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () async => await Get.to(
-              () => SettingsView(),
-              transition: Transition.cupertino,
-              duration: Duration(milliseconds: 400),
-            ),
-          ),
-          IconButton(
-            icon: Icon(Icons.phonelink_erase),
-            onPressed: controller.erase,
-          ),
-        ],
+      appBar: CustomAppBar(
+        text: 'home_view_title'.tr,
       ),
+      // actions: [
+      //   IconButton(
+      //     icon: Icon(Icons.face),
+      //     onPressed: () =>
+      //         _settingsController.setPointMode = PointMode.points,
+      //   ),
+      //   IconButton(
+      //     icon: Icon(Icons.settings),
+      //     onPressed: () async => await Get.to(
+      //       () => SettingsView(),
+      //       transition: Transition.cupertino,
+      //       duration: Duration(milliseconds: 400),
+      //     ),
+      //   ),
+      //   IconButton(
+      //     icon: Icon(Icons.phonelink_erase),
+      //     onPressed: controller.erase,
+      //   ),
+      // ],
+
       body: SafeArea(
         child: GestureDetector(
           onPanStart: (details) {
@@ -86,9 +81,10 @@ class HomeView extends GetView<HomeController> {
       // 'Container' is used to enable [rotated custom fab], If i try to
       // put it in a FAB it does not work,
       floatingActionButton: Container(
+        color: Colors.transparent,
         height: _mediaQuery.orientation == Orientation.portrait
-            ? _mediaQuery.size.height * 0.06
-            : _mediaQuery.size.width * 0.06,
+            ? _mediaQuery.size.height * 0.065
+            : _mediaQuery.size.width * 0.065,
         width: double.infinity,
         alignment: Alignment.bottomRight,
         child: CustomFAB(),
