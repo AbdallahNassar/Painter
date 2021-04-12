@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
+import 'package:get/get.dart';
+import 'package:painter/app/modules/home/controllers/home_controller.dart';
 
 class SpringyWidget extends StatefulWidget {
   //================================ Properties ================================
   final Widget child;
   final Duration duration;
+  final Alignment alignment;
   //================================ Constructor ===============================
   const SpringyWidget({
     required this.child,
-    required this.duration,
+    this.duration = const Duration(milliseconds: 1000),
+    this.alignment = Alignment.bottomRight,
   });
 
   @override
@@ -20,7 +24,8 @@ class _SpringyWidgetState extends State<SpringyWidget>
   //================================= Parameters ===============================
   late AnimationController _animationController;
   late Animation<Alignment> _alignmentAnimation;
-  Alignment _dragAlignment = Alignment.center;
+  late Alignment _dragAlignment = widget.alignment;
+  final homeController = Get.find<HomeController>();
   //================================== Methods =================================
   @override
   void initState() {
@@ -31,9 +36,11 @@ class _SpringyWidgetState extends State<SpringyWidget>
     );
     // update the [_drageAlignment] when the [animationController] works
     _animationController.addListener(() {
-      setState(() {
-        _dragAlignment = _alignmentAnimation.value;
-      });
+      setState(
+        () {
+          _dragAlignment = _alignmentAnimation.value;
+        },
+      );
     });
   }
 
@@ -42,7 +49,7 @@ class _SpringyWidgetState extends State<SpringyWidget>
     _alignmentAnimation = _animationController.drive(
       AlignmentTween(
         begin: _dragAlignment,
-        end: Alignment.center,
+        end: widget.alignment,
       ),
     );
     // Calculate the velocity relative to the unit interval, [0,1],
@@ -51,7 +58,6 @@ class _SpringyWidgetState extends State<SpringyWidget>
     final _unitsPerSecondY = pixelsPerSecond.dy / size.height;
     final _unitsPerSecond = Offset(_unitsPerSecondX, _unitsPerSecondY);
     final _unitVelocity = _unitsPerSecond.distance;
-
     // from [physics] package to add the springness to the animation
     const spring = SpringDescription(
       mass: 30,
@@ -62,6 +68,8 @@ class _SpringyWidgetState extends State<SpringyWidget>
     final _springSimulation = SpringSimulation(spring, 0, 1, _unitVelocity);
 
     _animationController.animateWith(_springSimulation);
+
+    // _animationController.forward();
   }
 
   //============================================================================
@@ -82,18 +90,18 @@ class _SpringyWidgetState extends State<SpringyWidget>
     //================================ Parameters ==============================
     final _size = MediaQuery.of(context).size;
     //==========================================================================
-    // [GestureDetector] is used to hande gestures
     return GestureDetector(
       // [Align] with [AnimationController ]is used to animated the alignment
       //  of the widget while it's being held
       onPanUpdate: (details) {
+        homeController.erase(details.localPosition);
         // add to the current alignment some [x,y] to move it
         // divide by 2 to convert units of “pixels dragged” to coordinates
-        // that Align uses.
+        // that Align uses which is in range [0,1]
         setState(() {
           _dragAlignment += Alignment(
-            details.delta.dx / (_size.width / 2),
-            details.delta.dy / (_size.height / 2),
+            (details.delta.dx) / (_size.width / 2),
+            (details.delta.dy) / (_size.height / 2),
           );
         });
       },

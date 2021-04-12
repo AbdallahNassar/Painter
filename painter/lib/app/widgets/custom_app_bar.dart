@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:painter/app/core/theme/app_theme.dart';
 import 'package:painter/app/modules/home/controllers/home_controller.dart';
+import 'package:painter/app/modules/home/widgets/springy_widget.dart';
+import 'package:painter/app/modules/settings/views/settings_view.dart';
 
 // 'with' is like a mixin to allow this class to be of return type
 // [StatelessWidget] and [PreferredSizeWidget]
@@ -36,6 +38,14 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
         IconButton(
           icon: Icon(Icons.ac_unit),
           onPressed: () => homeController.setDrawingMode = DrawingMode.ERASE,
+        ),
+        IconButton(
+          icon: Icon(Icons.settings),
+          onPressed: () async => await Get.to(
+            () => SettingsView(),
+            transition: Transition.cupertino,
+            duration: Duration(milliseconds: 400),
+          ),
         ),
       ],
     );
