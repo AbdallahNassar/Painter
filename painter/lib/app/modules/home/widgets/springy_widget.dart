@@ -68,8 +68,6 @@ class _SpringyWidgetState extends State<SpringyWidget>
     final _springSimulation = SpringSimulation(spring, 0, 1, _unitVelocity);
 
     _animationController.animateWith(_springSimulation);
-
-    // _animationController.forward();
   }
 
   //============================================================================
@@ -89,22 +87,26 @@ class _SpringyWidgetState extends State<SpringyWidget>
   Widget build(BuildContext context) {
     //================================ Parameters ==============================
     final _size = MediaQuery.of(context).size;
+
     //==========================================================================
     return GestureDetector(
       // [Align] with [AnimationController ]is used to animated the alignment
       //  of the widget while it's being held
       onPanUpdate: (details) {
-        homeController.erase(details.localPosition);
         // add to the current alignment some [x,y] to move it
         // divide by 2 to convert units of “pixels dragged” to coordinates
         // that Align uses which is in range [0,1]
         setState(() {
           _dragAlignment += Alignment(
-            (details.delta.dx) / (_size.width / 2),
-            (details.delta.dy) / (_size.height / 2),
+            details.delta.dx / (_size.width / 2.3),
+            details.delta.dy / (_size.height / 2.4),
           );
         });
+
+        // remove the point where the widget is at
+        homeController.erase(details.localPosition);
       },
+
       // this will call the 'run animation' method to animate the widget
       // back to it's position when the user releases his fingers
       onPanEnd: (endDetails) =>

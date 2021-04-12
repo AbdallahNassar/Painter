@@ -11,7 +11,7 @@ class AppTheme {
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.scaffoldBacgroundColor,
       titleTextStyle: TextStyle(
-        color: Colors.deepPurple.shade900,
+        color: AppColors.primaryColor,
         fontWeight: FontWeight.bold,
         fontSize: 27.0,
         fontFamily: 'Nunito',
