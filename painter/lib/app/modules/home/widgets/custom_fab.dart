@@ -19,6 +19,9 @@ class CustomFAB extends GetView<HomeController> {
     return RotatedBox(
       quarterTurns: 3,
       child: SpeedDial(
+        closeManually: true,
+        onOpen: controller.toggleFAB,
+        onClose: controller.toggleFAB,
         shape: StadiumBorder(),
         backgroundColor: Colors.deepPurple.shade900,
         animatedIcon: AnimatedIcons.menu_close,
@@ -28,22 +31,6 @@ class CustomFAB extends GetView<HomeController> {
         curve: Curves.fastLinearToSlowEaseIn,
         tooltip: 'Tools',
         children: [
-          SpeedDialChild(
-            backgroundColor: AppColors.scaffoldBacgroundColor,
-            labelStyle: _fabTextStyle(),
-            child: RotatedBox(
-              quarterTurns: 1,
-              // child: Obx(
-              //   () => IconButton(
-              //     icon: Icon(
-              //       Icons.remove_circle,
-              //       size: 30.0,
-              //     ),
-              //     onPressed: controller.isUndoActive ? controller.erase : null,
-              //   ),
-              // ),
-            ),
-          ),
           SpeedDialChild(
             backgroundColor: AppColors.scaffoldBacgroundColor,
             labelStyle: _fabTextStyle(),
