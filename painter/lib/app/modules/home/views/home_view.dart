@@ -58,22 +58,26 @@ class HomeView extends GetView<HomeController> {
               child: SpringyWidget(
                 alignment: Alignment(0.88, 0.78),
                 duration: Duration(milliseconds: 800),
-                child: Container(
-                  padding: const EdgeInsets.all(2.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(220.0),
-                    border: Border.all(
-                      width: 2.0,
-                      color: AppColors.primaryColor,
+                child: Obx(
+                  () => Container(
+                    padding: EdgeInsets.all(
+                      _settingsController.minDeleteDistance / 22,
                     ),
-                    color: AppColors.grey,
-                  ),
-                  child: Image.asset(
-                    'assets/icons/eraserIcon.png',
-                    // color: Colors.black,
-                    height: _mediaQuery.orientation == Orientation.portrait
-                        ? _mediaQuery.size.height * 0.045
-                        : _mediaQuery.size.width * 0.045,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(220.0),
+                      border: Border.all(
+                        width: 2.0,
+                        color: AppColors.primaryColor,
+                      ),
+                      color: AppColors.grey,
+                    ),
+                    child: Image.asset(
+                      'assets/icons/eraserIcon.png',
+                      // color: Colors.black,
+                      height: _mediaQuery.orientation == Orientation.portrait
+                          ? _settingsController.minDeleteDistance * 2
+                          : _settingsController.minDeleteDistance * 2,
+                    ),
                   ),
                 ),
               ),

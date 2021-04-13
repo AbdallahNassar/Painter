@@ -7,9 +7,9 @@ class SettingsController extends GetxController {
   //================================ Properties ================================
   var _strokeColor = Color(0xff000000).obs;
   var _pointsMode = PointMode.points.obs;
-  var _strokeWitdth = 5.0.obs;
+  var _strokeWitdth = 3.0.obs;
   // this will be distance to check against for deletion, [the eraser size]
-  var _deleteDistance = 10.5.obs;
+  var _deleteDistance = 10.0.obs;
 
   //================================= Methods ==================================
   @override
@@ -45,6 +45,10 @@ class SettingsController extends GetxController {
     _pointsMode.value = newVal;
   }
 
+  //============================================================================
+  set setEraserSize(double val) {
+    _deleteDistance.value = val;
+  }
   //============================================================================
 
 }

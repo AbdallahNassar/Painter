@@ -5,4 +5,8 @@ const Map<String, String> englishDictionary = {
   'settings_view_title': 'Settings',
   'got_it': 'Got it',
   'color_picker_title': 'Choose a Color',
+  'pen_color': 'Pen Color',
+  'pen_type': 'Pen Type',
+  'pen_size': 'Pen Size',
+  'eraser_size': 'Eraser Size',
 };

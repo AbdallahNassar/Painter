@@ -30,7 +30,7 @@ class SettingsView extends GetView<SettingsController> {
                 children: [
                   FittedBox(
                     child: Text(
-                      'Pen Color',
+                      'pen_color'.tr,
                       style: AppTheme.appTheme.textTheme.subtitle1,
                     ),
                   ),
@@ -39,22 +39,67 @@ class SettingsView extends GetView<SettingsController> {
               ),
             ),
             SettingTile(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  FittedBox(
-                    child: Text(
-                      'Pen Color',
-                      style: AppTheme.appTheme.textTheme.subtitle1,
-                    ),
-                  ),
-                  CustomColorPalette(),
-                ],
+              child: Obx(
+                () => CustomSlider(
+                  text: 'pen_size'.tr,
+                  value: controller.strokeWidth,
+                  maxValue: 20.0,
+                  onChanged: (newVal) => controller.setStrokeWidth = newVal,
+                ),
+              ),
+            ),
+            SettingTile(
+              child: Obx(
+                () => CustomSlider(
+                  text: 'eraser_size'.tr,
+                  value: controller.minDeleteDistance,
+                  maxValue: 80.0,
+                  onChanged: (newVal) => controller.setEraserSize = newVal,
+                ),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class CustomSlider extends StatelessWidget {
+  //================================ Properties ================================
+  final String text;
+  final double value;
+  final double maxValue;
+  final Function onChanged;
+  //================================ Constructor ===============================
+  const CustomSlider({
+    required this.text,
+    required this.value,
+    required this.onChanged,
+    required this.maxValue,
+  });
+  //================================= Methods ==================================
+
+  //============================================================================
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            text,
+            style: AppTheme.appTheme.textTheme.subtitle1,
+          ),
+        ),
+        Slider.adaptive(
+          value: value,
+          onChanged: (newSize) => onChanged(newSize),
+          max: maxValue,
+          activeColor: AppColors.primaryColor,
+        ),
+      ],
     );
   }
 }
