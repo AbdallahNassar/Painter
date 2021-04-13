@@ -20,8 +20,6 @@ class CustomFAB extends GetView<HomeController> {
       quarterTurns: 3,
       child: SpeedDial(
         closeManually: true,
-        onOpen: controller.toggleFAB,
-        onClose: controller.toggleFAB,
         shape: StadiumBorder(),
         backgroundColor: Colors.deepPurple.shade900,
         animatedIcon: AnimatedIcons.menu_close,
