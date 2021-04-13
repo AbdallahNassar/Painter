@@ -73,32 +73,31 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
           ),
-          GestureDetector(
-            child: SpringyWidget(
-              alignment: _mediaQuery.orientation == Orientation.portrait
-                  ? Alignment(0.9, 0.78)
-                  : Alignment(0.945, 0.5),
-              duration: Duration(milliseconds: 800),
-              child: Container(
-                padding: const EdgeInsets.all(5.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(220.0),
-                  border: Border.all(
-                    width: 2.0,
-                    color: AppColors.primaryColor,
+          if (_mediaQuery.orientation == Orientation.portrait)
+            GestureDetector(
+              child: SpringyWidget(
+                alignment: Alignment(0.88, 0.78),
+                duration: Duration(milliseconds: 800),
+                child: Container(
+                  padding: const EdgeInsets.all(2.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(220.0),
+                    border: Border.all(
+                      width: 2.0,
+                      color: AppColors.primaryColor,
+                    ),
+                    color: AppColors.grey,
                   ),
-                  color: AppColors.grey,
-                ),
-                child: Image.asset(
-                  'assets/icons/eraserIcon.png',
-                  // color: Colors.black,
-                  height: _mediaQuery.orientation == Orientation.portrait
-                      ? _mediaQuery.size.height * 0.045
-                      : _mediaQuery.size.width * 0.045,
+                  child: Image.asset(
+                    'assets/icons/eraserIcon.png',
+                    // color: Colors.black,
+                    height: _mediaQuery.orientation == Orientation.portrait
+                        ? _mediaQuery.size.height * 0.045
+                        : _mediaQuery.size.width * 0.045,
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
       floatingActionButton: Container(
