@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:get/get.dart';
 import 'package:painter/app/modules/home/controllers/home_controller.dart';
+import 'package:painter/app/modules/settings/controllers/settings_controller.dart';
 
 class SpringyWidget extends StatefulWidget {
   //================================ Properties ================================
@@ -26,6 +27,7 @@ class _SpringyWidgetState extends State<SpringyWidget>
   late Animation<Alignment> _alignmentAnimation;
   late Alignment _dragAlignment = widget.alignment;
   final homeController = Get.find<HomeController>();
+  final settingsController = Get.find<SettingsController>();
   //================================== Methods =================================
   @override
   void initState() {
@@ -104,7 +106,8 @@ class _SpringyWidgetState extends State<SpringyWidget>
         });
 
         // remove the point where the widget is at
-        homeController.erase(details.localPosition);
+        homeController.erase(
+            details.localPosition, settingsController.minDeleteDistance);
       },
 
       // this will call the 'run animation' method to animate the widget

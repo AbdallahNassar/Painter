@@ -32,14 +32,6 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
       actionsIconTheme: AppTheme.appTheme.appBarTheme.actionsIconTheme,
       actions: [
         IconButton(
-          icon: Icon(Icons.phonelink_erase),
-          onPressed: () => homeController.setDrawingMode = DrawingMode.PAINT,
-        ),
-        IconButton(
-          icon: Icon(Icons.ac_unit),
-          onPressed: () => homeController.setDrawingMode = DrawingMode.ERASE,
-        ),
-        IconButton(
           icon: Icon(Icons.settings),
           onPressed: () async => await Get.to(
             () => SettingsView(),

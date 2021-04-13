@@ -4,8 +4,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-enum DrawingMode { PAINT, ERASE }
-
 class HomeController extends GetxController {
   //================================ Properties ================================
   var _pointsList = <Offset>[].obs;
@@ -13,17 +11,11 @@ class HomeController extends GetxController {
   // this was made into [obs] to allow the 'isRedoActive' to update
   // automagically when the [trashlist] length change
   var _trashList = <Offset>[].obs;
-  // this will switch between drawing modes [draw or erase] to allow different
-  // functionalities on the [on pan upadate]
-  var _drawingMode = DrawingMode.PAINT.obs;
+
   // this will be the temp variable to hold the distance between two points
   // [drawn point and eraser]
   var distance = 0.0;
-  // this will be distance to check against for deletion, [the eraser size]
-  var deleteDistance = 10.5.obs;
-  // this will be used to dynamically render the fab width to allow drawing
-  // at the bottom of the screen if the fab is not opened.
-  var _isFABClosed = true.obs;
+
   //================================= Methods ==================================
   @override
   void onInit() {
@@ -50,8 +42,6 @@ class HomeController extends GetxController {
   bool get isUndoActive => _pointsList.isNotEmpty;
   bool get isRedoActive => _trashList.isNotEmpty;
   bool get isRestoreActive => (_pointsList.isEmpty && _trashList.isNotEmpty);
-  DrawingMode get drawingMode => _drawingMode.value;
-  bool get isFABClosed => _isFABClosed.value;
   //============================================================================
   void addPoint(Offset point) {
     // to only draw in it's specified area [respect appbar and bottom]
@@ -69,9 +59,9 @@ class HomeController extends GetxController {
   }
 
   //============================================================================
-  void erase(Offset point) {
+  void erase(Offset point, double minDeleteDistance) {
     _pointsList.removeWhere((element) {
-      return _calcuateDistance(point, element) <= deleteDistance.value;
+      return _calcuateDistance(point, element) <= minDeleteDistance;
     });
   }
 
@@ -97,18 +87,6 @@ class HomeController extends GetxController {
     _trashList.clear();
   }
 
-  //============================================================================
-  set setDrawingMode(DrawingMode newMode) {
-    _drawingMode.value = newMode;
-    print(
-        'Now in ${newMode == DrawingMode.PAINT ? 'Painting' : 'Erasing'} Mode');
-  }
-
-  //============================================================================
-  void toggleFAB() {
-    _isFABClosed.value = !_isFABClosed.value;
-    print('fab is now ${_isFABClosed.value ? 'closed' : 'opened'}');
-  }
   //============================================================================
 
 }

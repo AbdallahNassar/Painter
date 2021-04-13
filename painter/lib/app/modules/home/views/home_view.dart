@@ -25,39 +25,12 @@ class HomeView extends GetView<HomeController> {
       appBar: CustomAppBar(
         text: 'home_view_title'.tr,
       ),
-      // actions: [
-      //   IconButton(
-      //     icon: Icon(Icons.face),
-      //     onPressed: () =>
-      //         _settingsController.setPointMode = PointMode.points,
-      //   ),
-      //   IconButton(
-      //     icon: Icon(Icons.settings),
-      //     onPressed: () async => await Get.to(
-      //       () => SettingsView(),
-      //       transition: Transition.cupertino,
-      //       duration: Duration(milliseconds: 400),
-      //     ),
-      //   ),
-      //   IconButton(
-      //     icon: Icon(Icons.phonelink_erase),
-      //     onPressed: controller.erase,
-      //   ),
-      // ],
-
       body: Stack(
         children: [
           GestureDetector(
-            onPanStart: (details) {
-              controller.drawingMode == DrawingMode.PAINT
-                  ? controller.addPoint(details.localPosition)
-                  : controller.erase(details.localPosition);
-            },
-            onPanUpdate: (details) {
-              controller.drawingMode == DrawingMode.PAINT
-                  ? controller.addPoint(details.localPosition)
-                  : controller.erase(details.localPosition);
-            },
+            onPanStart: (details) => controller.addPoint(details.localPosition),
+            onPanUpdate: (details) =>
+                controller.addPoint(details.localPosition),
             child: Obx(
               () => CustomPaint(
                 painter: MyPainter(

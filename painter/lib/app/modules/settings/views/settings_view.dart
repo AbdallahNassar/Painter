@@ -16,12 +16,12 @@ class SettingsView extends GetView<SettingsController> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              FlutterLogo(),
-            ],
-          ),
+        child: Column(
+          children: [
+            Expanded(
+              child: Placeholder(),
+            ),
+          ],
         ),
       ),
     );
