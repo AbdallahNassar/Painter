@@ -60,8 +60,10 @@ class HomeView extends GetView<HomeController> {
                 duration: Duration(milliseconds: 800),
                 child: Obx(
                   () => Container(
+                    // to dynamically change the size of the eraser when
+                    // I change pen size
                     padding: EdgeInsets.all(
-                      _settingsController.minDeleteDistance / 22,
+                      _settingsController.eraserSize / 22,
                     ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(220.0),
@@ -73,10 +75,9 @@ class HomeView extends GetView<HomeController> {
                     ),
                     child: Image.asset(
                       'assets/icons/eraserIcon.png',
-                      // color: Colors.black,
-                      height: _mediaQuery.orientation == Orientation.portrait
-                          ? _settingsController.minDeleteDistance * 2
-                          : _settingsController.minDeleteDistance * 2,
+                      // to dynamically change the size of the eraser when
+                      // I change pen size
+                      height: _settingsController.eraserSize * 2,
                     ),
                   ),
                 ),

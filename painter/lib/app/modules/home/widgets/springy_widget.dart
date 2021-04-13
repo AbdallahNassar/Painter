@@ -107,7 +107,9 @@ class _SpringyWidgetState extends State<SpringyWidget>
 
         // remove the point where the widget is at
         homeController.erase(
-            details.localPosition, settingsController.minDeleteDistance);
+          details.localPosition,
+          settingsController.eraserSize,
+        );
       },
 
       // this will call the 'run animation' method to animate the widget

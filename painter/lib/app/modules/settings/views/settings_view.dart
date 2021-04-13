@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:painter/app/core/theme/app_colors.dart';
 import 'package:painter/app/core/theme/app_theme.dart';
 import 'package:painter/app/modules/settings/widgets/custom_color_picker.dart';
+import 'package:painter/app/modules/settings/widgets/custom_slider.dart';
+import 'package:painter/app/modules/settings/widgets/pen_types.dart';
 import 'package:painter/app/modules/settings/widgets/setting_tile.dart';
 import 'package:painter/app/widgets/custom_app_bar.dart';
 
@@ -39,11 +41,35 @@ class SettingsView extends GetView<SettingsController> {
               ),
             ),
             SettingTile(
+              flex: 2,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        'pen_type'.tr,
+                        style: AppTheme.appTheme.textTheme.subtitle1,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: PenTypes(),
+                  ),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                ],
+              ),
+            ),
+            SettingTile(
               child: Obx(
                 () => CustomSlider(
                   text: 'pen_size'.tr,
                   value: controller.strokeWidth,
-                  maxValue: 20.0,
+                  maxValue: controller.maxPenSize,
+                  minValue: controller.minPenSize - 1,
                   onChanged: (newVal) => controller.setStrokeWidth = newVal,
                 ),
               ),
@@ -52,8 +78,9 @@ class SettingsView extends GetView<SettingsController> {
               child: Obx(
                 () => CustomSlider(
                   text: 'eraser_size'.tr,
-                  value: controller.minDeleteDistance,
-                  maxValue: 80.0,
+                  value: controller.eraserSize,
+                  minValue: controller.minEraserSize - 1,
+                  maxValue: controller.maxEraserSize,
                   onChanged: (newVal) => controller.setEraserSize = newVal,
                 ),
               ),
@@ -61,45 +88,6 @@ class SettingsView extends GetView<SettingsController> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class CustomSlider extends StatelessWidget {
-  //================================ Properties ================================
-  final String text;
-  final double value;
-  final double maxValue;
-  final Function onChanged;
-  //================================ Constructor ===============================
-  const CustomSlider({
-    required this.text,
-    required this.value,
-    required this.onChanged,
-    required this.maxValue,
-  });
-  //================================= Methods ==================================
-
-  //============================================================================
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text(
-            text,
-            style: AppTheme.appTheme.textTheme.subtitle1,
-          ),
-        ),
-        Slider.adaptive(
-          value: value,
-          onChanged: (newSize) => onChanged(newSize),
-          max: maxValue,
-          activeColor: AppColors.primaryColor,
-        ),
-      ],
     );
   }
 }

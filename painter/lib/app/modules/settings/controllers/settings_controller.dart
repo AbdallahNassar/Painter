@@ -9,8 +9,7 @@ class SettingsController extends GetxController {
   var _pointsMode = PointMode.points.obs;
   var _strokeWitdth = 3.0.obs;
   // this will be distance to check against for deletion, [the eraser size]
-  var _deleteDistance = 10.0.obs;
-
+  var _deleteDistance = 20.0.obs;
   //================================= Methods ==================================
   @override
   void onInit() {
@@ -29,7 +28,11 @@ class SettingsController extends GetxController {
   PointMode get pointsMode => _pointsMode.value;
   double get strokeWidth => _strokeWitdth.value;
   Color get strokeColor => _strokeColor.value;
-  double get minDeleteDistance => _deleteDistance.value;
+  double get eraserSize => _deleteDistance.value;
+  double get minEraserSize => 20.0;
+  double get maxEraserSize => 80.0;
+  double get minPenSize => 3.0;
+  double get maxPenSize => 20.0;
   //============================================================================
   set setStrokeWidth(double val) {
     _strokeWitdth.value = val;
