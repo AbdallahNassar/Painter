@@ -56,7 +56,7 @@ class HomeView extends GetView<HomeController> {
           if (_mediaQuery.orientation == Orientation.portrait)
             GestureDetector(
               child: SpringyWidget(
-                alignment: Alignment(0.88, 0.78),
+                alignment: Alignment(0.89, 0.78),
                 duration: Duration(milliseconds: 800),
                 child: Obx(
                   () => Container(

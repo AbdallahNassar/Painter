@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:painter/app/modules/settings/controllers/settings_controller.dart';
+import 'package:painter/app/modules/settings/widgets/pen_types_item.dart';
 import '';
 
 class PenTypes extends StatelessWidget {
@@ -19,28 +20,19 @@ class PenTypes extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Spacer(),
-        Expanded(
-          flex: 10,
-          child: PenTypesItem(
-            imagePath: 'assets/images/lines.png',
-            pointMode: PointMode.lines,
-          ),
+        PenTypesItem(
+          imagePath: 'assets/images/lines.png',
+          pointMode: PointMode.lines,
         ),
         Spacer(),
-        Expanded(
-          flex: 10,
-          child: PenTypesItem(
-            imagePath: 'assets/images/points.png',
-            pointMode: PointMode.points,
-          ),
+        PenTypesItem(
+          imagePath: 'assets/images/points.png',
+          pointMode: PointMode.points,
         ),
         Spacer(),
-        Expanded(
-          flex: 10,
-          child: PenTypesItem(
-            imagePath: 'assets/images/polygons.png',
-            pointMode: PointMode.polygon,
-          ),
+        PenTypesItem(
+          imagePath: 'assets/images/polygons.png',
+          pointMode: PointMode.polygon,
         ),
         Spacer(),
       ],
