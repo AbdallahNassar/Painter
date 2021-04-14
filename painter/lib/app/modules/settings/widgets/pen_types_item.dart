@@ -37,14 +37,9 @@ class PenTypesItem extends StatelessWidget {
                       begin: Alignment.bottomLeft,
                       end: Alignment.topRight,
                       colors: [
-                        Colors.red,
-                        Colors.green,
-                        Colors.blue,
-                      ],
-                      stops: [
-                        0.15,
-                        0.17,
-                        0.9,
+                        Color(0xFF8C2480),
+                        Colors.deepPurple.shade100,
+                        Colors.deepPurple.shade200,
                       ],
                     )
                   : null,
