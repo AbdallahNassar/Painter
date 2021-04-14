@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:painter/app/modules/home/controllers/home_controller.dart';
 
 class SettingsController extends GetxController {
   //================================ Properties ================================
@@ -10,6 +11,10 @@ class SettingsController extends GetxController {
   var _strokeWitdth = 3.0.obs;
   // this will be distance to check against for deletion, [the eraser size]
   var _deleteDistance = 20.0.obs;
+  // this will be used to communicate with home controller, for example
+  // to increment the index of active list, to tell the [Big List] that
+  // a change has happened
+  var homeController = Get.find<HomeController>();
   //================================= Methods ==================================
   @override
   void onInit() {
@@ -36,21 +41,25 @@ class SettingsController extends GetxController {
   //============================================================================
   set setStrokeWidth(double val) {
     _strokeWitdth.value = val;
+    homeController.makeNewList();
   }
 
   //============================================================================
   set setColor(Color val) {
     _strokeColor.value = val;
+    homeController.makeNewList();
   }
 
   //============================================================================
   set setPointMode(PointMode newVal) {
     _pointsMode.value = newVal;
+    homeController.makeNewList();
   }
 
   //============================================================================
   set setEraserSize(double val) {
     _deleteDistance.value = val;
+    homeController.makeNewList();
   }
   //============================================================================
 
