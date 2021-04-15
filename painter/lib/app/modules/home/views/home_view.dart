@@ -3,7 +3,6 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
 import 'package:painter/app/core/theme/app_colors.dart';
-import 'package:painter/app/core/theme/app_theme.dart';
 import 'package:painter/app/modules/home/widgets/custom_fab.dart';
 import 'package:painter/app/modules/home/widgets/my_painter.dart';
 import 'package:painter/app/modules/home/widgets/springy_widget.dart';
@@ -45,15 +44,15 @@ class HomeView extends GetView<HomeController> {
             child: Obx(
               () => CustomPaint(
                 painter: MyPainter(
-                  bigList: controller.pointsList,
+                  bigList: controller.bigList,
                   pointMode: _settingsController.pointsMode,
                   strokeWidth: _settingsController.strokeWidth,
                   color: _settingsController.strokeColor,
                 ),
                 // take all the available space
                 size: Size.infinite,
-                isComplex: true,
-                willChange: true,
+                // isComplex: true,
+                // willChange: true,
               ),
             ),
           ),

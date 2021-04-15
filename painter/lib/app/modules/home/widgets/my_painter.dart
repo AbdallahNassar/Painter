@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class MyPainter extends CustomPainter {
   //================================ Properties ================================
-  final List<Offset> bigList;
+  final bigList;
   final PointMode pointMode;
   final double strokeWidth;
   final Color color;
@@ -17,9 +17,9 @@ class MyPainter extends CustomPainter {
     required this.color,
   }) {
     _paint = Paint()
-      // making antiAlias 'false' will vastly improve performance when there are
-      // thousands of points to paint
-      ..isAntiAlias = false
+      // making antiAlias 'true' will vastly improve performance when
+      // there are thousands of points to paint
+      ..isAntiAlias = true
       ..strokeWidth = strokeWidth
       ..style = PaintingStyle.fill
       ..strokeCap = StrokeCap.round
@@ -28,11 +28,14 @@ class MyPainter extends CustomPainter {
   //============================================================================
   @override
   void paint(Canvas canvas, Size size) {
-    print('painting the big list');
-    // for (var pointsList in bigList)
-    canvas.drawPoints(pointMode, bigList, _paint);
+    print('Painting the big list with ${bigList.length} small lists.');
+    for (var pointsList in bigList)
+      canvas.drawPoints(pointMode, pointsList, _paint);
   }
 
+  //============================================================================
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+  //============================================================================
+
 }

@@ -3,7 +3,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:painter/app/modules/settings/controllers/settings_controller.dart';
 
 class HomeController extends GetxController {
   //================================ Properties ================================
@@ -12,7 +11,7 @@ class HomeController extends GetxController {
   // is created where the new changes will be applied
   // e.g. if I changed the font color I only want that to affect
   // the next points that I draw not the previous ones
-  var _bigList = [<Offset>[].obs];
+  var _bigList = [<Offset>[].obs].obs;
 
   // this will hold the deleted points, for later redoing.
   // this was made into [obs] to allow the 'isRedoActive' to update
@@ -41,12 +40,9 @@ class HomeController extends GetxController {
   }
 
   //================================ Getters ===================================
-  // Kinda not necessary, but to abstract the 'GetX .value' syntax in the
-  // widgets and UI.
-  List<Offset> get pointsList => _bigList.last.toList();
-  // this will give the entire big list back, for redrawing all the entire
-  // lists in the list
-  List<List<Offset>> get bigList => _bigList.toList();
+  // this will give the entire big list back, for redrawing all the small
+  // lists in that list, each with its syle
+  List<List<Offset>> get bigList => _bigList;
   // these will be reactive as they will automagically change when the
   // lists lengths change.
   bool get isUndoActive => _bigList.last.isNotEmpty;
@@ -61,16 +57,17 @@ class HomeController extends GetxController {
   }
 
   //============================================================================
+  //TODO: handle this with big list
   void clearPoints() {
     print('is trash empty ? ${_trashList.isEmpty}');
     _trashList.value = List.from(_bigList.last);
-    _bigList.last.clear();
+    _bigList.clear();
     print('is trash empty ? ${_trashList.isEmpty}');
   }
 
   //============================================================================
   void erase(Offset point, double minDeleteDistance) {
-    _bigList.last.removeWhere(
+    bigList.last.removeWhere(
       (element) {
         return _calcuateDistance(point, element) <= minDeleteDistance;
       },
@@ -86,11 +83,13 @@ class HomeController extends GetxController {
   }
 
   //============================================================================
+  //TODO: handle this with big list
   void undo() {
     _trashList.add(_bigList.last.removeLast());
   }
 
   //============================================================================
+  //TODO: handle this with big list
   void redo() {
     _bigList.last.add(_trashList.removeLast());
   }
@@ -98,7 +97,7 @@ class HomeController extends GetxController {
   //============================================================================
   void restore() {
     // points list will now = trashlist
-    _bigList.last.value = List.from(_trashList);
+    _bigList.last.value = (_trashList);
     // remove trash list
     _trashList.clear();
   }

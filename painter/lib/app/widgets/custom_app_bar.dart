@@ -16,9 +16,11 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final Color backgroundColor;
   final double elevation;
   final List<Widget> actions;
+  final Widget leading;
   //================================ Constructor ===============================
   CustomAppBar({
     required this.text,
+    this.leading = const Text(''),
     this.haveBackArrow = true,
     this.backgroundColor = Colors.blue,
     this.elevation = 4.0,
@@ -37,6 +39,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
           style: AppTheme.appTheme.appBarTheme.titleTextStyle,
         ),
       ),
+      leading: leading,
       centerTitle: true,
       backgroundColor: AppTheme.appTheme.appBarTheme.backgroundColor,
       actionsIconTheme: AppTheme.appTheme.appBarTheme.actionsIconTheme,
