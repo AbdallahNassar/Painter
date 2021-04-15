@@ -44,6 +44,9 @@ class HomeController extends GetxController {
   // Kinda not necessary, but to abstract the 'GetX .value' syntax in the
   // widgets and UI.
   List<Offset> get pointsList => _bigList.last.toList();
+  // this will give the entire big list back, for redrawing all the entire
+  // lists in the list
+  List<List<Offset>> get bigList => _bigList.toList();
   // these will be reactive as they will automagically change when the
   // lists lengths change.
   bool get isUndoActive => _bigList.last.isNotEmpty;

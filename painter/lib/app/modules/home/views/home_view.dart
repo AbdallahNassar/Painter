@@ -45,7 +45,7 @@ class HomeView extends GetView<HomeController> {
             child: Obx(
               () => CustomPaint(
                 painter: MyPainter(
-                  pointsList: controller.pointsList,
+                  bigList: controller.pointsList,
                   pointMode: _settingsController.pointsMode,
                   strokeWidth: _settingsController.strokeWidth,
                   color: _settingsController.strokeColor,

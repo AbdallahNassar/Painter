@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 
 class MyPainter extends CustomPainter {
   //================================ Properties ================================
-  final List<Offset> pointsList;
+  final List<Offset> bigList;
   final PointMode pointMode;
   final double strokeWidth;
   final Color color;
   late final Paint _paint;
   //================================ Constructor ===============================
   MyPainter({
-    required this.pointsList,
+    required this.bigList,
     required this.pointMode,
     required this.strokeWidth,
     required this.color,
@@ -28,7 +28,9 @@ class MyPainter extends CustomPainter {
   //============================================================================
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawPoints(pointMode, pointsList, _paint);
+    print('painting the big list');
+    // for (var pointsList in bigList)
+    canvas.drawPoints(pointMode, bigList, _paint);
   }
 
   @override
