@@ -42,7 +42,7 @@ class HomeController extends GetxController {
   //================================ Getters ===================================
   // this will give the entire big list back, for redrawing all the small
   // lists in that list, each with its syle
-  List<List<Offset>> get bigList => _bigList;
+  List<List<Offset>> get bigList => _bigList.toList();
   // these will be reactive as they will automagically change when the
   // lists lengths change.
   bool get isUndoActive => _bigList.last.isNotEmpty;

@@ -8,6 +8,7 @@ class MyPainter extends CustomPainter {
   final PointMode pointMode;
   final double strokeWidth;
   final Color color;
+  final int dummyValue;
   late final Paint _paint;
   //================================ Constructor ===============================
   MyPainter({
@@ -15,6 +16,7 @@ class MyPainter extends CustomPainter {
     required this.pointMode,
     required this.strokeWidth,
     required this.color,
+    required this.dummyValue,
   }) {
     _paint = Paint()
       // making antiAlias 'true' will vastly improve performance when

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
@@ -34,6 +36,14 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
         ],
+        // leading: Obx(
+        //   () => Text(
+        //     controller.bigList.last.length.toString(),
+        //     style: TextStyle(
+        //       color: Colors.black,
+        //     ),
+        //   ),
+        // ),
       ),
       body: Stack(
         children: [
@@ -48,11 +58,16 @@ class HomeView extends GetView<HomeController> {
                   pointMode: _settingsController.pointsMode,
                   strokeWidth: _settingsController.strokeWidth,
                   color: _settingsController.strokeColor,
+                  // this will be used to force the widget to rebuild .. it
+                  // doesn't rebuild without it as I want to pass the entire
+                  // big list to the painter, and a change in the biglist is
+                  // only considered when I insert another list intoit
+                  dummyValue: controller.bigList.last.length,
                 ),
                 // take all the available space
                 size: Size.infinite,
-                // isComplex: true,
-                // willChange: true,
+                isComplex: true,
+                willChange: true,
               ),
             ),
           ),
