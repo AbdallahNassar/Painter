@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
@@ -22,16 +24,27 @@ class HomeView extends GetView<HomeController> {
     //==========================================================================
     print('rebuilding home');
     return Scaffold(
-      appBar: CustomAppBar(text: 'home_view_title'.tr, actions: [
-        IconButton(
-          icon: Icon(Icons.settings),
-          onPressed: () async => await Get.to(
-            () => SettingsView(),
-            transition: Transition.cupertino,
-            duration: Duration(milliseconds: 400),
+      appBar: CustomAppBar(
+        text: 'home_view_title'.tr,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () async => await Get.to(
+              () => SettingsView(),
+              transition: Transition.cupertino,
+              duration: Duration(milliseconds: 400),
+            ),
           ),
-        ),
-      ]),
+        ],
+        // leading: Obx(
+        //   () => Text(
+        //     controller.bigList.last.length.toString(),
+        //     style: TextStyle(
+        //       color: Colors.black,
+        //     ),
+        //   ),
+        // ),
+      ),
       body: Stack(
         children: [
           GestureDetector(
@@ -41,10 +54,15 @@ class HomeView extends GetView<HomeController> {
             child: Obx(
               () => CustomPaint(
                 painter: MyPainter(
-                  pointsList: controller.pointsList,
+                  bigList: controller.bigList,
                   pointMode: _settingsController.pointsMode,
                   strokeWidth: _settingsController.strokeWidth,
                   color: _settingsController.strokeColor,
+                  // this will be used to force the widget to rebuild .. it
+                  // doesn't rebuild without it as I want to pass the entire
+                  // big list to the painter, and a change in the biglist is
+                  // only considered when I insert another list intoit
+                  dummyValue: controller.bigList.last.length,
                 ),
                 // take all the available space
                 size: Size.infinite,
@@ -56,24 +74,29 @@ class HomeView extends GetView<HomeController> {
           if (_mediaQuery.orientation == Orientation.portrait)
             GestureDetector(
               child: SpringyWidget(
-                alignment: Alignment(0.88, 0.78),
+                alignment: Alignment(0.89, 0.78),
                 duration: Duration(milliseconds: 800),
-                child: Container(
-                  padding: const EdgeInsets.all(2.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(220.0),
-                    border: Border.all(
-                      width: 2.0,
-                      color: AppColors.primaryColor,
+                child: Obx(
+                  () => Container(
+                    // to dynamically change the size of the eraser when
+                    // I change pen size
+                    padding: EdgeInsets.all(
+                      _settingsController.eraserSize / 22,
                     ),
-                    color: AppColors.grey,
-                  ),
-                  child: Image.asset(
-                    'assets/icons/eraserIcon.png',
-                    // color: Colors.black,
-                    height: _mediaQuery.orientation == Orientation.portrait
-                        ? _mediaQuery.size.height * 0.045
-                        : _mediaQuery.size.width * 0.045,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(220.0),
+                      border: Border.all(
+                        width: 2.0,
+                        color: AppColors.primaryColor,
+                      ),
+                      color: AppColors.grey,
+                    ),
+                    child: Image.asset(
+                      'assets/icons/eraserIcon.png',
+                      // to dynamically change the size of the eraser when
+                      // I change pen size
+                      height: _settingsController.eraserSize * 2,
+                    ),
                   ),
                 ),
               ),

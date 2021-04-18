@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:painter/app/core/theme/app_colors.dart';
 import 'package:painter/app/modules/colorpicker/views/colorpicker_view.dart';
 import 'package:painter/app/modules/settings/controllers/settings_controller.dart';
-import 'package:painter/app/routes/app_pages.dart';
 
 class CustomColorPalette extends StatelessWidget {
   //================================ Properties ================================

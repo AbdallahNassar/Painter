@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 class SettingTile extends StatelessWidget {
   //================================ Properties ================================
   final Widget child;
+  final int flex;
   //================================ Constructor ===============================
-  const SettingTile({required this.child});
+  const SettingTile({
+    required this.child,
+    this.flex = 1,
+  });
   //================================= Methods ==================================
 
   //============================================================================
   @override
   Widget build(BuildContext context) {
-    //================================ Parameters ==============================
-    final MediaQueryData _mediaQuery = MediaQuery.of(context);
-    //==========================================================================
     return Expanded(
+      flex: flex,
       child: Card(
         elevation: 4.0,
         margin: const EdgeInsets.symmetric(

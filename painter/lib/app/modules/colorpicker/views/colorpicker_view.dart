@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 import 'package:get/get.dart';
-import 'package:painter/app/core/theme/app_colors.dart';
 import 'package:painter/app/core/theme/app_theme.dart';
 import 'package:painter/app/modules/settings/controllers/settings_controller.dart';
-import 'package:painter/app/widgets/custom_app_bar.dart';
 
 class ColorpickerView extends GetView<SettingsController> {
   //================================ Properties ================================
