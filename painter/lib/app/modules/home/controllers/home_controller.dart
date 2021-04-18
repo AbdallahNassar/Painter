@@ -60,10 +60,10 @@ class HomeController extends GetxController {
   //========================================================================l====
   void clearPoints() {
     // put all s  list into a trash list
-    // using this method to only take the values from [bigList]
+    // using this method to only take the values from [_bigList]
     // into [trashList], otherwise the two become one and If I clear one,
     // I clear the other.
-    _trashList.value = List.from(bigList);
+    _trashList.value = List.from(_bigList);
     // clear the big list, now bigList = []
     _bigList.clear();
     // insert a new list into the bigList, this will be my 'biglist.last'
@@ -72,11 +72,13 @@ class HomeController extends GetxController {
 
   //============================================================================
   void erase(Offset point, double minDeleteDistance) {
-    bigList.last.removeWhere(
+    var tempIndex = _bigList.last.indexWhere(
       (element) {
         return _calcuateDistance(point, element) <= minDeleteDistance;
       },
     );
+    // [IndexWhere] returns [-1] if it didn't find anything
+    if (tempIndex != -1) _trashList.last.add(_bigList.last.removeAt(tempIndex));
   }
 
   //============================================================================
