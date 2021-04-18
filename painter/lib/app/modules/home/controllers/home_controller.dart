@@ -45,8 +45,9 @@ class HomeController extends GetxController {
   List<List<Offset>> get bigList => _bigList.toList();
   // these will be reactive as they will automagically change when the
   // lists lengths change.
-  bool get isUndoActive => _bigList.isNotEmpty || _bigList.last.isNotEmpty;
-  bool get isRedoActive => _trashList.isNotEmpty;
+  // I used 'First' as This will be the last thing to change
+  bool get isUndoActive => _bigList.first.isNotEmpty;
+  bool get isRedoActive => _trashList.first.isNotEmpty;
   bool get isRestoreActive => (_bigList.last.isEmpty && _trashList.isNotEmpty);
   //============================================================================
   void addPoint(Offset point) {
@@ -88,6 +89,7 @@ class HomeController extends GetxController {
 
   //============================================================================
   void undo() {
+    print('@undo @ home controller, ${_bigList.length}');
     // If I reach the end of the list inside the [bigList] I remove it and go
     // onto the list before it in the [BigList] , bigList[2] ==> bigList[1]
     if (_bigList.last.isEmpty && _bigList.length > 1) {
@@ -100,6 +102,10 @@ class HomeController extends GetxController {
   //============================================================================
   //TODO: handle this with big list
   void redo() {
+    if (_trashList.last.isEmpty && _trashList.length > 1) {
+      _bigList.removeLast();
+      return;
+    }
     _bigList.last.add(_trashList.last.removeLast());
   }
 
