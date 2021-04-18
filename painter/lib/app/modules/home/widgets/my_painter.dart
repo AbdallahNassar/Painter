@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class MyPainter extends CustomPainter {
   //================================ Properties ================================
-  final bigList;
+  final List<List<Offset>> bigList;
   final PointMode pointMode;
   final double strokeWidth;
   final Color color;

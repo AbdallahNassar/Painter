@@ -14,9 +14,6 @@ class SettingTile extends StatelessWidget {
   //============================================================================
   @override
   Widget build(BuildContext context) {
-    //================================ Parameters ==============================
-    final MediaQueryData _mediaQuery = MediaQuery.of(context);
-    //==========================================================================
     return Expanded(
       flex: flex,
       child: Card(
