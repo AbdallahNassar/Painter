@@ -33,6 +33,7 @@ class HomeView extends GetView<HomeController> {
               () => SettingsView(),
               transition: Transition.cupertino,
               duration: Duration(milliseconds: 400),
+              popGesture: true,
             ),
           ),
         ],

@@ -78,7 +78,10 @@ class HomeController extends GetxController {
       },
     );
     // [IndexWhere] returns [-1] if it didn't find anything
-    if (tempIndex != -1) _trashList.last.add(_bigList.last.removeAt(tempIndex));
+    if (tempIndex != -1)
+      _trashList.last.add(
+        _bigList.last.removeAt(tempIndex),
+      );
   }
 
   //============================================================================
