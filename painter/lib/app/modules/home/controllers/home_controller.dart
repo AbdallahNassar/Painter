@@ -16,7 +16,7 @@ class HomeController extends GetxController {
   // this will hold the deleted points, for later redoing.
   // this was made into [obs] to allow the 'isRedoActive' to update
   // automagically when the [trashlist] length change
-  var _trashList = <Offset>[].obs;
+  var _trashList = [<Offset>[].obs].obs;
 
   // this will be the temp variable to hold the distance between two points
   // [drawn point and eraser]
@@ -35,7 +35,7 @@ class HomeController extends GetxController {
 
   @override
   void onClose() {
-    _bigList.clear();
+    _bigList.close();
     _trashList.close();
   }
 
@@ -45,8 +45,9 @@ class HomeController extends GetxController {
   List<List<Offset>> get bigList => _bigList.toList();
   // these will be reactive as they will automagically change when the
   // lists lengths change.
-  bool get isUndoActive => _bigList.last.isNotEmpty;
-  bool get isRedoActive => _trashList.isNotEmpty;
+  // I used 'First' as This will be the last thing to change
+  bool get isUndoActive => _bigList.first.isNotEmpty;
+  bool get isRedoActive => _trashList.first.isNotEmpty;
   bool get isRestoreActive => (_bigList.last.isEmpty && _trashList.isNotEmpty);
   //============================================================================
   void addPoint(Offset point) {
@@ -56,22 +57,28 @@ class HomeController extends GetxController {
     print('$point' + ', length = ${_bigList.last.length}');
   }
 
-  //============================================================================
-  //TODO: handle this with big list
+  //========================================================================l====
   void clearPoints() {
-    print('is trash empty ? ${_trashList.isEmpty}');
-    _trashList.value = List.from(_bigList.last);
+    // put all s  list into a trash list
+    // using this method to only take the values from [_bigList]
+    // into [trashList], otherwise the two become one and If I clear one,
+    // I clear the other.
+    _trashList.value = List.from(_bigList);
+    // clear the big list, now bigList = []
     _bigList.clear();
-    print('is trash empty ? ${_trashList.isEmpty}');
+    // insert a new list into the bigList, this will be my 'biglist.last'
+    _bigList.add(<Offset>[].obs);
   }
 
   //============================================================================
   void erase(Offset point, double minDeleteDistance) {
-    bigList.last.removeWhere(
+    var tempIndex = _bigList.last.indexWhere(
       (element) {
         return _calcuateDistance(point, element) <= minDeleteDistance;
       },
     );
+    // [IndexWhere] returns [-1] if it didn't find anything
+    if (tempIndex != -1) _trashList.last.add(_bigList.last.removeAt(tempIndex));
   }
 
   //============================================================================
@@ -83,23 +90,35 @@ class HomeController extends GetxController {
   }
 
   //============================================================================
-  //TODO: handle this with big list
   void undo() {
-    _trashList.add(_bigList.last.removeLast());
+    print('@undo @ home controller, ${_bigList.length}');
+    // If I reach the end of the list inside the [bigList] I remove it and go
+    // onto the list before it in the [BigList] , bigList[2] ==> bigList[1]
+    if (_bigList.last.isEmpty && _bigList.length > 1) {
+      _bigList.removeLast();
+      return;
+    }
+    _trashList.last.add(_bigList.last.removeLast());
   }
 
   //============================================================================
   //TODO: handle this with big list
   void redo() {
-    _bigList.last.add(_trashList.removeLast());
+    if (_trashList.last.isEmpty && _trashList.length > 1) {
+      _bigList.removeLast();
+      return;
+    }
+    _bigList.last.add(_trashList.last.removeLast());
   }
 
   //============================================================================
   void restore() {
     // points list will now = trashlist
-    _bigList.last.value = (_trashList);
+    _bigList.value = List.from(_trashList);
     // remove trash list
     _trashList.clear();
+    // insert a new list into the trashList, this will be my 'trashList.last'
+    _trashList.add(<Offset>[].obs);
   }
 
   //============================================================================
@@ -108,10 +127,8 @@ class HomeController extends GetxController {
   // 2) create a new list in the [Big List]
   void makeNewList() {
     if (_bigList.last.isNotEmpty) {
-      print('now on list with index = ${_bigList.length - 1}');
       _bigList.add(<Offset>[].obs);
     }
   }
   //============================================================================
-
 }
