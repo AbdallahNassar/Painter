@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:painter/app/data/models/my_paint.dart';
 import 'package:painter/app/modules/home/controllers/home_controller.dart';
 
 class SettingsController extends GetxController {
@@ -12,7 +11,8 @@ class SettingsController extends GetxController {
   // this will be used to communicate with home controller, for example
   // to increment the index of active list, to tell the [Big List] that
   // a change has happened
-  var homeController = Get.find<HomeController>();
+  final homeController = Get.find<HomeController>();
+
   // var to hold the value while it's being changed by the
   // slider, [Obs] to rebuild the widget.
   var _strokeColor = Color(0xff000000).obs;
@@ -47,44 +47,25 @@ class SettingsController extends GetxController {
   set setStrokeWidth(double newVal) {
     // save the new value, to update the widget that observes this var
     _strokeWitdth.value = newVal;
-    homeController.makeNewList(MyPaint(
-      [],
-      strokeWidth: newVal,
-      color: strokeColor,
-      pointMode: pointsMode,
-    ));
+    homeController.makeNewList();
   }
 
   //============================================================================
   set setColor(Color newVal) {
     _strokeColor.value = newVal;
 
-    homeController.makeNewList(MyPaint(
-      [],
-      color: newVal,
-      pointMode: pointsMode,
-      strokeWidth: strokeWidth,
-    ));
+    homeController.makeNewList();
   }
 
   //============================================================================
   set setPointMode(PointMode newVal) {
     _pointsMode.value = newVal;
-
-    homeController.makeNewList(
-      MyPaint(
-        [],
-        pointMode: newVal,
-        color: strokeColor,
-        strokeWidth: strokeWidth,
-      ),
-    );
+    homeController.makeNewList();
   }
 
   //============================================================================
   set setEraserSize(double newVal) {
     _deleteDistance.value = newVal;
-
     _deleteDistance.value = newVal;
   }
   //============================================================================

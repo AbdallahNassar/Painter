@@ -21,6 +21,7 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     //================================ Parameters ==============================
     final MediaQueryData _mediaQuery = MediaQuery.of(context);
+    controller.setSettingsController = (_settingsController);
     //==========================================================================
     print('rebuilding home');
     return Scaffold(

@@ -4,9 +4,16 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:painter/app/data/models/my_paint.dart';
+import 'package:painter/app/modules/settings/controllers/settings_controller.dart';
 
 class HomeController extends GetxController {
   //================================ Properties ================================
+  // this will hold an instance of [settingController], I can't use [Get.find]
+  // as it would enter an infitie loop as I'm also calling [Get.find] for the
+  // [HomeController] in the [SettingController]
+  var settingsController;
+  //============================================================================
+  //
   // this will hold the different [MyPaint][] Structures, will be used
   // to have different styles for each list .. so create a new list in the
   // [Big List] is created where the new changes will be applied
@@ -40,9 +47,12 @@ class HomeController extends GetxController {
   // lists lengths change.
   // I used 'First' as This will be the last thing to change
   bool get isUndoActive => _bigList.first.value.pointsList.isNotEmpty;
-  bool get isRedoActive => _trashList.first.value.pointsList.isNotEmpty;
+  bool get isRedoActive =>
+      _trashList.first.value.pointsList.isNotEmpty ||
+      _trashList.last.value.pointsList.isNotEmpty;
   bool get isRestoreActive => (_bigList.last.value.pointsList.isEmpty &&
       _trashList.last.value.pointsList.isNotEmpty);
+
   //================================= Methods ==================================
   void addPoint(Offset point) {
     // to only draw in it's specified area [respect appbar and bottom]
@@ -86,7 +96,20 @@ class HomeController extends GetxController {
 
   //============================================================================
   void undo() {
-    // If I reach the end of the list inside the [bigList] I remove it and go
+    // check to see the style of [MyPaint] [color.. width.. etc] of the
+    // [bigList] matches the style of [MyPaint] for the trashList
+    if (!_isSamePaint(_bigList.last.value, _trashList.last.value))
+      // if so, take the style of [MyPaint] of the points in the big list
+      _trashList.add(
+        MyPaint(
+          [],
+          color: _bigList.last.value.color,
+          strokeWidth: _bigList.last.value.strokeWidth,
+          pointMode: _bigList.last.value.pointMode,
+        ).obs,
+      );
+
+    // If I reach the end of the list inside the [bigList], I remove it and go
     // onto the list before it in the [BigList] , bigList[2] ==> bigList[1]
     if (_bigList.last.value.pointsList.isEmpty && _bigList.length > 1) {
       _bigList.removeLast();
@@ -121,6 +144,14 @@ class HomeController extends GetxController {
       });
     });
   }
+  //============================================================================
+
+  //checks to see if two paints are the same
+  bool _isSamePaint(MyPaint paint1, MyPaint paint2) {
+    return (paint1.color == paint2.color &&
+        paint1.pointMode == paint2.pointMode &&
+        paint1.strokeWidth == paint2.strokeWidth);
+  }
 
   //============================================================================
   void clearPoints() {
@@ -132,7 +163,10 @@ class HomeController extends GetxController {
     // clear the big list, now bigList = []
     _bigList.clear();
     // insert a new list into the bigList, this will be my 'biglist.last'
-    _bigList.add(MyPaint([]).obs);
+    // start from my last prefrences [preferred settings]
+    _bigList.add(
+      _getNewPaint().obs,
+    );
   }
 
   //============================================================================
@@ -142,19 +176,35 @@ class HomeController extends GetxController {
     // remove trash list
     _trashList.clear();
     // insert a new list into the trashList, this will be my 'trashList.last'
-    _trashList.add(MyPaint([]).obs);
+    _trashList.add(
+      _getNewPaint().obs,
+    );
   }
 
   //============================================================================
   // will be used to
   // 1) increment the active index counter
   // 2) create a new list in the [Big List]
-  void makeNewList(MyPaint? myPaint) {
+  void makeNewList() {
     if (_bigList.last.value.pointsList.isNotEmpty) {
       _bigList.add(
-        myPaint != null ? myPaint.obs : MyPaint([]).obs,
+        _getNewPaint().obs,
       );
     }
   }
+
   //============================================================================
+  set setSettingsController(SettingsController inputSettingsController) =>
+      settingsController = inputSettingsController;
+  //============================================================================
+  // will be called when I clear the [bigList]/[trashList] and this will be
+  // my List.last
+  MyPaint _getNewPaint() => MyPaint(
+        [],
+        color: settingsController.strokeColor,
+        pointMode: settingsController.pointsMode,
+        strokeWidth: settingsController.strokeWidth,
+      );
+  //============================================================================
+
 }
