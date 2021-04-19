@@ -23,7 +23,6 @@ class HomeView extends GetView<HomeController> {
     final MediaQueryData _mediaQuery = MediaQuery.of(context);
     controller.setSettingsController = (_settingsController);
     //==========================================================================
-    print('rebuilding home');
     return Scaffold(
       appBar: CustomAppBar(
         text: 'home_view_title'.tr,

@@ -17,7 +17,7 @@ class SettingsController extends GetxController {
   // slider, [Obs] to rebuild the widget.
   var _strokeColor = Color(0xff000000).obs;
   var _pointsMode = PointMode.points.obs;
-  var _strokeWitdth = 3.0.obs;
+  var _strokeWitdth = 5.0.obs;
   //================================= Methods ==================================
   @override
   void onInit() {

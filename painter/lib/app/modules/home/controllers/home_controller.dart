@@ -47,9 +47,10 @@ class HomeController extends GetxController {
   // lists lengths change.
   // I used 'First' as This will be the last thing to change
   bool get isUndoActive => _bigList.first.value.pointsList.isNotEmpty;
-  bool get isRedoActive =>
-      _trashList.first.value.pointsList.isNotEmpty ||
-      _trashList.last.value.pointsList.isNotEmpty;
+  //TODO: handle this
+  bool get isRedoActive => _trashList.isNotEmpty;
+  // _trashList.first.value.pointsList.isNotEmpty ||
+  // _trashList.last.value.pointsList.isNotEmpty;
   bool get isRestoreActive => (_bigList.last.value.pointsList.isEmpty &&
       _trashList.last.value.pointsList.isNotEmpty);
 
@@ -98,8 +99,11 @@ class HomeController extends GetxController {
   void undo() {
     // check to see the style of [MyPaint] [color.. width.. etc] of the
     // [bigList] matches the style of [MyPaint] for the trashList
-    if (!_isSamePaint(_bigList.last.value, _trashList.last.value))
-      // if so, take the style of [MyPaint] of the points in the big list
+    if (!_isSamePaint(
+      _bigList.last.value.paint,
+      _trashList.last.value.paint,
+    ))
+      // if so, take the style of [MyPaint] of the points in the trash list
       _trashList.add(
         MyPaint(
           [],
@@ -113,7 +117,6 @@ class HomeController extends GetxController {
     // onto the list before it in the [BigList] , bigList[2] ==> bigList[1]
     if (_bigList.last.value.pointsList.isEmpty && _bigList.length > 1) {
       _bigList.removeLast();
-      return;
     }
     // update the bigList's Last element [MyPaint] by removing it's last elem
     _bigList.last.update((bigVal) {
@@ -125,13 +128,29 @@ class HomeController extends GetxController {
         );
       });
     });
+    print('undo is done');
   }
 
   //============================================================================
   void redo() {
+    // check to see the style of [MyPaint] [color.. width.. etc] of the
+    // [bigList] matches the style of [MyPaint] for the trashList
+    if (!_isSamePaint(
+      _bigList.last.value.paint,
+      _trashList.last.value.paint,
+    ))
+      // if so, take the style of [MyPaint] of the points in the big list
+      _bigList.add(
+        MyPaint(
+          [],
+          color: _trashList.last.value.color,
+          strokeWidth: _trashList.last.value.strokeWidth,
+          pointMode: _trashList.last.value.pointMode,
+        ).obs,
+      );
+
     if (_trashList.last.value.pointsList.isEmpty && _trashList.length > 1) {
       _bigList.removeLast();
-      return;
     }
     // update the bigList's Last element [MyPaint] by removing it's last elem
     _trashList.last.update((trashVal) {
@@ -143,14 +162,13 @@ class HomeController extends GetxController {
         );
       });
     });
+    print('redo is done');
   }
   //============================================================================
 
   //checks to see if two paints are the same
-  bool _isSamePaint(MyPaint paint1, MyPaint paint2) {
-    return (paint1.color == paint2.color &&
-        paint1.pointMode == paint2.pointMode &&
-        paint1.strokeWidth == paint2.strokeWidth);
+  bool _isSamePaint(Paint paint1, Paint paint2) {
+    return (paint1 == paint2);
   }
 
   //============================================================================

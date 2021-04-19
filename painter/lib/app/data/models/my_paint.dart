@@ -14,7 +14,7 @@ class MyPaint {
     this.pointsList, {
     this.color = const Color(0xff000000),
     this.pointMode = PointMode.points,
-    this.strokeWidth = 3.0,
+    this.strokeWidth = 5.0,
   }) {
     paint = Paint()
       ..isAntiAlias = true
