@@ -1,4 +1,4 @@
-=> rework the fab acions to work with big list
+=> have multiple styles for painting
 => redesign home page 
 => add local storage [Home page will be a list view of previous paintings]
 => show pen icon on long press

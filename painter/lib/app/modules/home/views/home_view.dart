@@ -37,14 +37,6 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
         ],
-        // leading: Obx(
-        //   () => Text(
-        //     controller.bigList.last.length.toString(),
-        //     style: TextStyle(
-        //       color: Colors.black,
-        //     ),
-        //   ),
-        // ),
       ),
       body: Stack(
         children: [
@@ -56,14 +48,11 @@ class HomeView extends GetView<HomeController> {
               () => CustomPaint(
                 painter: MyPainter(
                   bigList: controller.bigList,
-                  pointMode: _settingsController.pointsMode,
-                  strokeWidth: _settingsController.strokeWidth,
-                  color: _settingsController.strokeColor,
                   // this will be used to force the widget to rebuild .. it
                   // doesn't rebuild without it as I want to pass the entire
                   // big list to the painter, and a change in the biglist is
                   // only considered when I insert another list intoit
-                  dummyValue: controller.bigList.last.length,
+                  dummyValue: controller.bigList.last.value.pointsList.length,
                 ),
                 // take all the available space
                 size: Size.infinite,

@@ -6,6 +6,8 @@ import 'package:painter/app/modules/home/bindings/home_binding.dart';
 import 'package:painter/app/modules/home/views/home_view.dart';
 import 'package:painter/app/modules/settings/bindings/settings_binding.dart';
 import 'package:painter/app/modules/settings/views/settings_view.dart';
+import 'package:painter/app/modules/test/bindings/test_binding.dart';
+import 'package:painter/app/modules/test/views/test_view.dart';
 
 part 'app_routes.dart';
 
@@ -29,6 +31,11 @@ class AppPages {
       name: _Paths.COLORPICKER,
       page: () => ColorpickerView(),
       binding: ColorpickerBinding(),
+    ),
+    GetPage(
+      name: _Paths.TEST,
+      page: () => TestView(),
+      binding: TestBinding(),
     ),
   ];
 }
