@@ -50,8 +50,7 @@ class HomeController extends GetxController {
   bool get isRedoActive =>
       _trashList.first.value.pointsList.isNotEmpty ||
       _trashList.last.value.pointsList.isNotEmpty;
-  bool get isRestoreActive => (_bigList.last.value.pointsList.isEmpty &&
-      _trashList.last.value.pointsList.isNotEmpty);
+  bool get isRestoreActive => (isRedoActive && !isUndoActive);
 
   //================================= Methods ==================================
   void addPoint(Offset point) {
