@@ -47,21 +47,38 @@ class SettingsController extends GetxController {
   set setStrokeWidth(double newVal) {
     // save the new value, to update the widget that observes this var
     _strokeWitdth.value = newVal;
-    homeController.makeNewList(MyPaint([], strokeWidth: newVal));
+    homeController.makeNewList(MyPaint(
+      [],
+      strokeWidth: newVal,
+      color: strokeColor,
+      pointMode: pointsMode,
+    ));
   }
 
   //============================================================================
   set setColor(Color newVal) {
     _strokeColor.value = newVal;
 
-    homeController.makeNewList(MyPaint([], color: newVal));
+    homeController.makeNewList(MyPaint(
+      [],
+      color: newVal,
+      pointMode: pointsMode,
+      strokeWidth: strokeWidth,
+    ));
   }
 
   //============================================================================
   set setPointMode(PointMode newVal) {
     _pointsMode.value = newVal;
 
-    homeController.makeNewList(MyPaint([], pointMode: newVal));
+    homeController.makeNewList(
+      MyPaint(
+        [],
+        pointMode: newVal,
+        color: strokeColor,
+        strokeWidth: strokeWidth,
+      ),
+    );
   }
 
   //============================================================================

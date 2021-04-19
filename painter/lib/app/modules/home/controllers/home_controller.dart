@@ -56,22 +56,24 @@ class HomeController extends GetxController {
   //============================================================================
   void erase(Offset point, double minDeleteDistance) {
     //the [GetX] way of updating an [.obs] object
-    _bigList.last.update(
-      (val) {
-        // this will remove the object if the function returns true
-        val!.pointsList.removeWhere((element) {
-          // check the condition for deletion
-          if (_calcuateDistance(point, element) <= minDeleteDistance) {
-            // update the trashlist and add that element before it's deleted
-            _trashList.last.update((trashVal) {
-              trashVal!.pointsList.add(element);
-            });
-            return true;
-          }
-          return false;
-        });
-      },
-    );
+    _bigList.forEach((myPaint) {
+      myPaint.update(
+        (val) {
+          // this will remove the object if the function returns true
+          val!.pointsList.removeWhere((element) {
+            // check the condition for deletion
+            if (_calcuateDistance(point, element) <= minDeleteDistance) {
+              // update the trashlist and add that element before it's deleted
+              _trashList.last.update((trashVal) {
+                trashVal!.pointsList.add(element);
+              });
+              return true;
+            }
+            return false;
+          });
+        },
+      );
+    });
   }
 
   //============================================================================
@@ -108,7 +110,6 @@ class HomeController extends GetxController {
       _bigList.removeLast();
       return;
     }
-
     // update the bigList's Last element [MyPaint] by removing it's last elem
     _trashList.last.update((trashVal) {
       // update the trashlist by adding the element I just removed from the
