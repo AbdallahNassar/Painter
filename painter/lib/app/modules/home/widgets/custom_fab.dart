@@ -41,6 +41,7 @@ class CustomFAB extends GetView<HomeController> {
                     size: 30.0,
                   ),
                   onPressed: controller.isUndoActive ? controller.undo : null,
+                  highlightColor: Colors.transparent,
                 ),
               ),
             ),
@@ -57,6 +58,7 @@ class CustomFAB extends GetView<HomeController> {
                     size: 30.0,
                   ),
                   onPressed: controller.isRedoActive ? controller.redo : null,
+                  highlightColor: Colors.transparent,
                 ),
               ),
             ),
@@ -73,6 +75,7 @@ class CustomFAB extends GetView<HomeController> {
                   ),
                   onPressed:
                       controller.isUndoActive ? controller.clearPoints : null,
+                  highlightColor: Colors.transparent,
                 ),
               ),
             ),
@@ -87,6 +90,7 @@ class CustomFAB extends GetView<HomeController> {
                   icon: Icon(Icons.restore),
                   onPressed:
                       controller.isRestoreActive ? controller.restore : null,
+                  highlightColor: Colors.transparent,
                 ),
               ),
             ),

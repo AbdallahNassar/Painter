@@ -17,6 +17,7 @@ class SettingsView extends GetView<SettingsController> {
       appBar: CustomAppBar(
         text: 'settings_view_title'.tr,
         elevation: 0.0,
+        haveBackArrow: true,
       ),
       body: Container(
         height: double.infinity,

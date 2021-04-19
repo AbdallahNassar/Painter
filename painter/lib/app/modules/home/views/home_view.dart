@@ -21,8 +21,8 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     //================================ Parameters ==============================
     final MediaQueryData _mediaQuery = MediaQuery.of(context);
+    controller.setSettingsController = (_settingsController);
     //==========================================================================
-    print('rebuilding home');
     return Scaffold(
       appBar: CustomAppBar(
         text: 'home_view_title'.tr,
@@ -33,17 +33,10 @@ class HomeView extends GetView<HomeController> {
               () => SettingsView(),
               transition: Transition.cupertino,
               duration: Duration(milliseconds: 400),
+              popGesture: true,
             ),
           ),
         ],
-        // leading: Obx(
-        //   () => Text(
-        //     controller.bigList.last.length.toString(),
-        //     style: TextStyle(
-        //       color: Colors.black,
-        //     ),
-        //   ),
-        // ),
       ),
       body: Stack(
         children: [
@@ -55,14 +48,11 @@ class HomeView extends GetView<HomeController> {
               () => CustomPaint(
                 painter: MyPainter(
                   bigList: controller.bigList,
-                  pointMode: _settingsController.pointsMode,
-                  strokeWidth: _settingsController.strokeWidth,
-                  color: _settingsController.strokeColor,
                   // this will be used to force the widget to rebuild .. it
                   // doesn't rebuild without it as I want to pass the entire
                   // big list to the painter, and a change in the biglist is
                   // only considered when I insert another list intoit
-                  dummyValue: controller.bigList.last.length,
+                  dummyValue: controller.bigList.last.value.pointsList.length,
                 ),
                 // take all the available space
                 size: Size.infinite,

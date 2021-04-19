@@ -25,45 +25,48 @@ class ColorpickerView extends GetView<SettingsController> {
     //================================ Parameters ==============================
     final MediaQueryData _mediaQuery = MediaQuery.of(context);
     //==========================================================================
-    return Scaffold(
-      body: ListView(
-        children: [
-          _buildSizedBox(_mediaQuery),
-          Obx(
-            () => Text(
-              'color_picker_title'.tr,
-              style: AppTheme.appTheme.appBarTheme.titleTextStyle!.copyWith(
-                color: controller.strokeColor,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: ColorPicker(
-              pickerColor: controller.strokeColor,
-              onColorChanged: (newColor) {
-                controller.setColor = newColor;
-              },
-              showLabel: true,
-              displayThumbColor: true,
-              pickerAreaBorderRadius: BorderRadius.circular(
-                20.0,
-              ),
-            ),
-          ),
-          TextButton(
-            onPressed: () => Get.back(),
-            child: Obx(
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: ListView(
+          children: [
+            _buildSizedBox(_mediaQuery),
+            Obx(
               () => Text(
-                'Got it',
-                style: AppTheme.appTheme.textTheme.subtitle1!.copyWith(
+                'color_picker_title'.tr,
+                style: AppTheme.appTheme.appBarTheme.titleTextStyle!.copyWith(
                   color: controller.strokeColor,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: ColorPicker(
+                pickerColor: controller.strokeColor,
+                onColorChanged: (newColor) {
+                  controller.setColor = newColor;
+                },
+                showLabel: true,
+                displayThumbColor: true,
+                pickerAreaBorderRadius: BorderRadius.circular(
+                  20.0,
                 ),
               ),
             ),
-          ),
-        ],
+            TextButton(
+              onPressed: () => Get.back(),
+              child: Obx(
+                () => Text(
+                  'Got it',
+                  style: AppTheme.appTheme.textTheme.subtitle1!.copyWith(
+                    color: controller.strokeColor,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
