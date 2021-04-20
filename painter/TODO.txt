@@ -1,4 +1,3 @@
-=> have multiple styles for painting
-=> redesign home page 
 => add local storage [Home page will be a list view of previous paintings]
+=> redesign home page 
 => show pen icon on long press

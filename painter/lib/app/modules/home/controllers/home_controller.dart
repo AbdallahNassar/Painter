@@ -50,6 +50,7 @@ class HomeController extends GetxController {
   bool get isRedoActive =>
       _trashList.first.value.pointsList.isNotEmpty ||
       _trashList.last.value.pointsList.isNotEmpty;
+  // when there are points in trashList and there aren't in pointsList
   bool get isRestoreActive => (isRedoActive && !isUndoActive);
 
   //================================= Methods ==================================
