@@ -3,7 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:painter/app/data/models/my_paint.dart';
+import 'package:painter/app/data/models/paint_settings.dart';
 import 'package:painter/app/modules/settings/controllers/settings_controller.dart';
 
 class HomeController extends GetxController {
@@ -14,26 +14,26 @@ class HomeController extends GetxController {
   var settingsController;
   //============================================================================
   //
-  // this will hold the different [MyPaint][] Structures, will be used
+  // this will hold the different [PaintSettings][] Structures, will be used
   // to have different styles for each list .. so create a new list in the
   // [Big List] is created where the new changes will be applied
   // e.g. if I changed the font color I only want that to affect
   // the next points that I draw not the previous ones
   //
   // the bigList itself is [.obs] as when i clear the list and re-insert a
-  // new [MyPaint] in it, it doesn't update automatically
+  // new [PaintSettings] in it, it doesn't update automatically
   //
-  // the [MyPaint] is [.obs] as I want to redraw everything once a new point
+  // the [PaintSettings] is [.obs] as I want to redraw everything once a new point
   // is inserted in the list
   var _bigList = [
-    MyPaint([]).obs,
+    PaintSettings([]).obs,
   ].obs;
 
   // this will hold the deleted points, for later redoing.
   // this was made into [obs] to allow the 'isRedoActive' to update
   // automagically when the [trashlist] length change
   var _trashList = [
-    MyPaint([]).obs,
+    PaintSettings([]).obs,
   ].obs;
 
   // this will be the temp variable to hold the distance between two points
@@ -42,7 +42,7 @@ class HomeController extends GetxController {
   //================================ Getters ===================================
   // this will give the entire big list back, for redrawing all the small
   // lists in that list, each with its syle
-  List<Rx<MyPaint>> get bigList => _bigList;
+  List<Rx<PaintSettings>> get bigList => _bigList;
   // these will be reactive as they will automagically change when the
   // lists lengths change.
   // I used 'First' as This will be the last thing to change
@@ -66,8 +66,8 @@ class HomeController extends GetxController {
   //============================================================================
   void erase(Offset point, double minDeleteDistance) {
     //the [GetX] way of updating an [.obs] object
-    _bigList.forEach((myPaint) {
-      myPaint.update(
+    _bigList.forEach((PaintSettings) {
+      PaintSettings.update(
         (val) {
           // this will remove the object if the function returns true
           val!.pointsList.removeWhere((element) {
@@ -96,15 +96,15 @@ class HomeController extends GetxController {
 
   //============================================================================
   void undo() {
-    // check to see the style of [MyPaint] [color.. width.. etc] of the
-    // [bigList] matches the style of [MyPaint] for the trashList
+    // check to see the style of [PaintSettings] [color.. width.. etc] of the
+    // [bigList] matches the style of [PaintSettings] for the trashList
     if (!_isSamePaint(
       _bigList.last.value,
       _trashList.last.value,
     ))
-      // if so, take the style of [MyPaint] of the points in the trash list
+      // if so, take the style of [PaintSettings] of the points in the trash list
       _trashList.add(
-        MyPaint(
+        PaintSettings(
           [],
           color: _bigList.last.value.color,
           strokeWidth: _bigList.last.value.strokeWidth,
@@ -112,7 +112,7 @@ class HomeController extends GetxController {
         ).obs,
       );
 
-    // update the bigList's Last element [MyPaint] by removing it's last elem
+    // update the bigList's Last element [PaintSettings] by removing it's last elem
     _bigList.last.update((bigVal) {
       // update the trashlist by adding the element I just removed from the
       // big List
@@ -132,15 +132,15 @@ class HomeController extends GetxController {
 
   //============================================================================
   void redo() {
-    // check to see the style of [MyPaint] [color.. width.. etc] of the
-    // [bigList] matches the style of [MyPaint] for the trashList
+    // check to see the style of [PaintSettings] [color.. width.. etc] of the
+    // [bigList] matches the style of [PaintSettings] for the trashList
     if (!_isSamePaint(
       _bigList.last.value,
       _trashList.last.value,
     ))
-      // if so, take the style of [MyPaint] of the points in the big list
+      // if so, take the style of [PaintSettings] of the points in the big list
       _bigList.add(
-        MyPaint(
+        PaintSettings(
           [],
           color: _trashList.last.value.color,
           strokeWidth: _trashList.last.value.strokeWidth,
@@ -148,7 +148,7 @@ class HomeController extends GetxController {
         ).obs,
       );
 
-    // update the bigList's Last element [MyPaint] by removing it's last elem
+    // update the bigList's Last element [PaintSettings] by removing it's last elem
     _trashList.last.update((trashVal) {
       // update the trashlist by adding the element I just removed from the
       // big List
@@ -166,7 +166,7 @@ class HomeController extends GetxController {
   //============================================================================
 
   //checks to see if two paints are the same
-  bool _isSamePaint(MyPaint paint1, MyPaint paint2) {
+  bool _isSamePaint(PaintSettings paint1, PaintSettings paint2) {
     return (paint1.color == paint2.color &&
         paint1.pointMode == paint2.pointMode &&
         paint1.strokeWidth == paint2.strokeWidth);
@@ -218,7 +218,7 @@ class HomeController extends GetxController {
   //============================================================================
   // will be called when I clear the [bigList]/[trashList] and this will be
   // my List.last
-  MyPaint _getNewPaint() => MyPaint(
+  PaintSettings _getNewPaint() => PaintSettings(
         [],
         color: settingsController.strokeColor,
         pointMode: settingsController.pointsMode,
