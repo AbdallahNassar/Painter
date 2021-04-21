@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 import 'package:painter/app/core/theme/app_colors.dart';
 import 'package:painter/app/modules/home/widgets/custom_fab.dart';

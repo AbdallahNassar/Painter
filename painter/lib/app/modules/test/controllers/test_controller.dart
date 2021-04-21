@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 
-import 'package:painter/app/data/models/my_offset.dart';
 import 'package:painter/app/data/models/painting.dart';
 
 class TestController extends GetxController {

@@ -19,72 +19,78 @@ class SettingsView extends GetView<SettingsController> {
         elevation: 0.0,
         haveBackArrow: true,
       ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SettingTile(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  FittedBox(
-                    child: Text(
-                      'pen_color'.tr,
-                      style: AppTheme.appTheme.textTheme.subtitle1,
-                    ),
-                  ),
-                  CustomColorPalette(),
-                ],
-              ),
-            ),
-            SettingTile(
-              flex: 2,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        'pen_type'.tr,
-                        style: AppTheme.appTheme.textTheme.subtitle1,
+      body: SingleChildScrollView(
+        child: Container(
+          height: 700,
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SettingTile(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: FittedBox(
+                        child: Text(
+                          'pen_color'.tr,
+                          style: AppTheme.appTheme.textTheme.subtitle1,
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: PenTypes(),
-                  ),
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                ],
-              ),
-            ),
-            SettingTile(
-              child: Obx(
-                () => CustomSlider(
-                  text: 'pen_size'.tr,
-                  value: controller.strokeWidth,
-                  maxValue: controller.maxPenSize,
-                  minValue: controller.minPenSize - 1,
-                  onChanged: (newVal) => controller.setStrokeWidth = newVal,
+                    Expanded(
+                      flex: 4,
+                      child: CustomColorPalette(),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            SettingTile(
-              child: Obx(
-                () => CustomSlider(
-                  text: 'eraser_size'.tr,
-                  value: controller.eraserSize,
-                  minValue: controller.minEraserSize - 1,
-                  maxValue: controller.maxEraserSize,
-                  onChanged: (newVal) => controller.setEraserSize = newVal,
+              SettingTile(
+                flex: 2,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          'pen_type'.tr,
+                          style: AppTheme.appTheme.textTheme.subtitle1,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: PenTypes(),
+                    ),
+                    SizedBox(
+                      height: 15.0,
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
+              SettingTile(
+                child: Obx(
+                  () => CustomSlider(
+                    text: 'pen_size'.tr,
+                    value: controller.strokeWidth,
+                    maxValue: controller.maxPenSize,
+                    minValue: controller.minPenSize - 1,
+                    onChanged: (newVal) => controller.setStrokeWidth = newVal,
+                  ),
+                ),
+              ),
+              SettingTile(
+                child: Obx(
+                  () => CustomSlider(
+                    text: 'eraser_size'.tr,
+                    value: controller.eraserSize,
+                    minValue: controller.minEraserSize - 1,
+                    maxValue: controller.maxEraserSize,
+                    onChanged: (newVal) => controller.setEraserSize = newVal,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

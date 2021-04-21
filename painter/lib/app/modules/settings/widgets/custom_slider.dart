@@ -25,19 +25,23 @@ class CustomSlider extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text(
-            text,
-            style: AppTheme.appTheme.textTheme.subtitle1,
+        Expanded(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              text,
+              style: AppTheme.appTheme.textTheme.subtitle1,
+            ),
           ),
         ),
-        Slider.adaptive(
-          value: value,
-          onChanged: (newSize) => onChanged(newSize),
-          max: maxValue,
-          min: minValue,
-          activeColor: AppColors.primaryColor,
+        Expanded(
+          child: Slider.adaptive(
+            value: value,
+            onChanged: (newSize) => onChanged(newSize),
+            max: maxValue,
+            min: minValue,
+            activeColor: AppColors.primaryColor,
+          ),
         ),
       ],
     );

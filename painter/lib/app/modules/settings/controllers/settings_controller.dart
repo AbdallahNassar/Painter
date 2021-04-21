@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:painter/app/data/models/my_color.dart';
 import 'package:painter/app/modules/home/controllers/home_controller.dart';
