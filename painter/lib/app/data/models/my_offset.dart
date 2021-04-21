@@ -5,6 +5,7 @@ import 'dart:ui';
 class MyOffset extends Offset {
   //================================ Constructor ===============================
   MyOffset(double dx, double dy) : super(dx, dy);
+
   //============================================================================
   factory MyOffset.fromJson(Map<String, dynamic> jsonOffset) => MyOffset(
         jsonOffset['dx'],
