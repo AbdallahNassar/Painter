@@ -2,11 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:painter/app/data/models/my_paint.dart';
+import 'package:painter/app/data/models/painting.dart';
 
 class MyPainter extends CustomPainter {
   //================================ Properties ================================
-  final List<Rx<MyPaint>> bigList;
+  final List<Rx<Painting>> bigList;
   final int dummyValue;
   //================================ Constructor ===============================
   MyPainter({

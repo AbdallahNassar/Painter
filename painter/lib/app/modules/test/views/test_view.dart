@@ -14,21 +14,14 @@ class TestView extends GetView<TestController> {
         actions: [
           IconButton(
             icon: Icon(Icons.ac_unit),
-            onPressed: controller.add,
+            onPressed: controller.test,
           ),
-          IconButton(
-            icon: Icon(Icons.ac_unit),
-            onPressed: controller.edit,
-          )
         ],
       ),
       body: Center(
-        child: Obx(
-          () => Text(
-            controller.list.toString() +
-                controller.list.last.value.memories.toString(),
-            style: TextStyle(fontSize: 20),
-          ),
+        child: IconButton(
+          icon: Icon(Icons.ac_unit),
+          onPressed: controller.test,
         ),
       ),
     );

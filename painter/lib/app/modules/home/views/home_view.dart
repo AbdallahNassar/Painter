@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'package:painter/app/core/theme/app_colors.dart';
 import 'package:painter/app/modules/home/widgets/custom_fab.dart';
@@ -36,14 +37,23 @@ class HomeView extends GetView<HomeController> {
               popGesture: true,
             ),
           ),
+          IconButton(
+            icon: Icon(
+              Icons.save_outlined,
+            ),
+            onPressed: controller.save,
+          ),
         ],
       ),
       body: Stack(
         children: [
           GestureDetector(
-            onPanStart: (details) => controller.addPoint(details.localPosition),
-            onPanUpdate: (details) =>
-                controller.addPoint(details.localPosition),
+            onPanStart: (details) {
+              controller.addPoint(details.localPosition);
+            },
+            onPanUpdate: (details) {
+              controller.addPoint(details.localPosition);
+            },
             child: Obx(
               () => CustomPaint(
                 painter: MyPainter(

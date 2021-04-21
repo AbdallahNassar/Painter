@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:painter/app/data/models/my_color.dart';
 import 'package:painter/app/modules/home/controllers/home_controller.dart';
 
 class SettingsController extends GetxController {
@@ -15,7 +16,7 @@ class SettingsController extends GetxController {
 
   // var to hold the value while it's being changed by the
   // slider, [Obs] to rebuild the widget.
-  var _strokeColor = Color(0xff000000).obs;
+  var _strokeColor = MyColor(0xff000000).obs;
   var _pointsMode = PointMode.points.obs;
   var _strokeWitdth = 5.0.obs;
   //================================= Methods ==================================
@@ -36,7 +37,7 @@ class SettingsController extends GetxController {
 
   PointMode get pointsMode => _pointsMode.value;
   double get strokeWidth => _strokeWitdth.value;
-  Color get strokeColor => _strokeColor.value;
+  MyColor get strokeColor => _strokeColor.value;
   double get eraserSize => _deleteDistance.value;
   double get minEraserSize => 20.0;
   double get maxEraserSize => 80.0;
@@ -51,8 +52,8 @@ class SettingsController extends GetxController {
   }
 
   //============================================================================
-  set setColor(Color newVal) {
-    _strokeColor.value = newVal;
+  set setColor(int newColorVal) {
+    _strokeColor.value = MyColor(newColorVal);
 
     homeController.makeNewList();
   }

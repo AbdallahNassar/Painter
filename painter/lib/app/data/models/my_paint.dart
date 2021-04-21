@@ -1,27 +1,37 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
+import 'my_color.dart';
 
-class MyPaint {
+class MyPaint extends Paint {
   //================================ Properties ================================
-  List<Offset> pointsList;
-  final PointMode pointMode;
+  final bool isAntiAlias;
   final double strokeWidth;
-  final Color color;
-  late Paint paint;
+  final PaintingStyle style;
+  final StrokeCap strokeCap;
+  final MyColor color;
   //================================ Constructor ===============================
-  MyPaint(
-    this.pointsList, {
-    this.color = const Color(0xff000000),
-    this.pointMode = PointMode.points,
+  MyPaint({
+    this.isAntiAlias = false,
     this.strokeWidth = 5.0,
-  }) {
-    paint = Paint()
-      ..isAntiAlias = true
-      ..strokeWidth = strokeWidth
-      ..style = PaintingStyle.fill
-      ..strokeCap = StrokeCap.round
-      ..color = color;
-  }
+    this.style = PaintingStyle.fill,
+    this.strokeCap = StrokeCap.round,
+    this.color = const MyColor(0xff000000),
+  }) : super();
+  //================================= Methods ==================================
+  Map<String, dynamic> toJson() => {
+        'isAntiAlias': true,
+        'strokeWidth': 5.0,
+        'style': PaintingStyle.fill.index,
+        'strokeCap': StrokeCap.round.index,
+        'color': color.toJson(),
+      };
+  //============================================================================
+  factory MyPaint.fromJson(Map<String, dynamic> jsonPaint) => MyPaint(
+        color: MyColor.fromJson(jsonPaint['color']),
+        isAntiAlias: jsonPaint['isAntiAlias'],
+        strokeCap: StrokeCap.values[jsonPaint['strokeCap']],
+        style: PaintingStyle.values[jsonPaint['style']],
+        strokeWidth: jsonPaint['strokeWidth'],
+      );
   //============================================================================
 }
