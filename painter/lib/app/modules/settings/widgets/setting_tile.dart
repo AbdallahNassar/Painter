@@ -17,7 +17,7 @@ class SettingTile extends StatelessWidget {
     return Expanded(
       flex: flex,
       child: Card(
-        elevation: 4.0,
+        elevation: 5.0,
         margin: const EdgeInsets.symmetric(
           vertical: 10.0,
           horizontal: 15.0,
