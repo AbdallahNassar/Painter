@@ -5,6 +5,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:painter/app/core/theme/app_colors.dart';
 import 'package:painter/app/data/models/my_offset.dart';
 import 'package:painter/app/data/models/painting.dart';
 import 'package:painter/app/modules/settings/controllers/settings_controller.dart';
@@ -119,8 +120,10 @@ class HomeController extends GetxController {
       }
       //? case2] all is good.
       _storageDriver.write('database', jsonDataBase);
+      _showSnackBar(success: true);
     } catch (e) {
       print('Error at [save Method], $e');
+      _showSnackBar(success: false);
     }
   }
 
@@ -142,6 +145,25 @@ class HomeController extends GetxController {
     _bigList.last.update((val) {
       val!.pointsList.add(MyOffset(point.dx, point.dy));
     });
+  }
+
+  //============================================================================
+  void _showSnackBar({required bool success}) {
+    try {
+      var title = success ? 'Success!' : 'Failure!';
+      var message = success
+          ? 'Saved in Local Stroage Successfully.'
+          : 'Counldn\'t save into storage.\nSomthing went wrong.';
+      Get.snackbar(
+        title,
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: AppColors.scaffoldBacgroundColor,
+        snackStyle: SnackStyle.FLOATING,
+      );
+    } catch (e) {
+      print('Error @ method [showSnackBar] $e');
+    }
   }
 
   //============================================================================

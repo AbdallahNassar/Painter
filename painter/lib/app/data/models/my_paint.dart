@@ -11,7 +11,7 @@ class MyPaint extends Paint {
   final MyColor color;
   //================================ Constructor ===============================
   MyPaint({
-    this.isAntiAlias = true,
+    this.isAntiAlias = false,
     this.strokeWidth = 5.0,
     this.style = PaintingStyle.fill,
     this.strokeCap = StrokeCap.round,

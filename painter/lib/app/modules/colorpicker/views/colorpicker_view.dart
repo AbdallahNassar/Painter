@@ -45,7 +45,7 @@ class ColorpickerView extends GetView<SettingsController> {
               child: ColorPicker(
                 pickerColor: controller.strokeColor,
                 onColorChanged: (newColor) {
-                  controller.setColor = newColor;
+                  controller.setColor = newColor.value;
                 },
                 showLabel: true,
                 displayThumbColor: true,

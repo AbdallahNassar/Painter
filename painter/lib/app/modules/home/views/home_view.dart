@@ -38,21 +38,22 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.sanitizer),
-            onPressed: () {
-              var _storageDriver = GetStorage();
-              var x = ReadWriteValue('test', 0, () => _storageDriver).val;
-              print(x);
-            },
+            icon: Icon(
+              Icons.save_outlined,
+            ),
+            onPressed: controller.save,
           ),
         ],
       ),
       body: Stack(
         children: [
           GestureDetector(
-            onPanStart: (details) => controller.addPoint(details.localPosition),
-            onPanUpdate: (details) =>
-                controller.addPoint(details.localPosition),
+            onPanStart: (details) {
+              controller.addPoint(details.localPosition);
+            },
+            onPanUpdate: (details) {
+              controller.addPoint(details.localPosition);
+            },
             child: Obx(
               () => CustomPaint(
                 painter: MyPainter(
