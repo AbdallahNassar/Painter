@@ -21,6 +21,12 @@ class ScalingWidget extends StatelessWidget {
       height: height,
       width: width,
       child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+          border: Border.all(
+            color: Colors.grey,
+          ),
+        ),
         child: FittedBox(
           fit: BoxFit.contain,
           child: SizedBox(

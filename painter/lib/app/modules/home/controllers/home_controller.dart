@@ -16,7 +16,7 @@ class HomeController extends GetxController {
   // as it would enter an infitie loop as I'm also calling [Get.find] for the
   // [HomeController] in the [SettingController]
   var settingsController;
-  var pageViewController;
+  late final PageController pageViewController;
   // this will be my interface with the device local storage
   final _storageDriver = GetStorage();
   //============================================================================
@@ -69,7 +69,9 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     _fetchDataBaseFromStorage();
-    pageViewController = PageController();
+    pageViewController = PageController(
+      viewportFraction: 0.8,
+    );
   }
 
   //============================================================================
@@ -185,24 +187,26 @@ class HomeController extends GetxController {
   //============================================================================
   void erase(Offset point, double minDeleteDistance) {
     //the [GetX] way of updating an [.obs] object
-    _bigList.forEach((painting) {
-      painting.update(
-        (val) {
-          // this will remove the object if the function returns true
-          val!.pointsList.removeWhere((element) {
-            // check the condition for deletion
-            if (_calcuateDistance(point, element) <= minDeleteDistance) {
-              // update the trashlist and add that element before it's deleted
-              _trashList.last.update((trashVal) {
-                trashVal!.pointsList.add(element);
-              });
-              return true;
-            }
-            return false;
-          });
-        },
-      );
-    });
+    _bigList.forEach(
+      (painting) {
+        painting.update(
+          (val) {
+            // this will remove the object if the function returns true
+            val!.pointsList.removeWhere((element) {
+              // check the condition for deletion
+              if (_calcuateDistance(point, element) <= minDeleteDistance) {
+                // update the trashlist and add that element before it's deleted
+                _trashList.last.update((trashVal) {
+                  trashVal!.pointsList.add(element);
+                });
+                return true;
+              }
+              return false;
+            });
+          },
+        );
+      },
+    );
   }
 
   //============================================================================
@@ -346,5 +350,15 @@ class HomeController extends GetxController {
   //============================================================================
   //! This section is for the pageView related Methods
   //============================================================================
+  Future<void> changePageView(
+    int newPageIndex, {
+    Duration duration = const Duration(milliseconds: 300),
+    Curve curve = Curves.fastLinearToSlowEaseIn,
+  }) async {
+    await pageViewController.animateToPage(newPageIndex,
+        duration: duration, curve: curve);
+  }
+  //============================================================================
 
+  //============================================================================
 }
