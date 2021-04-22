@@ -16,6 +16,7 @@ class HomeController extends GetxController {
   // as it would enter an infitie loop as I'm also calling [Get.find] for the
   // [HomeController] in the [SettingController]
   var settingsController;
+  var pageViewController;
   // this will be my interface with the device local storage
   final _storageDriver = GetStorage();
   //============================================================================
@@ -61,11 +62,24 @@ class HomeController extends GetxController {
   bool get isRestoreActive => (isRedoActive && !isUndoActive);
 
   //================================= Methods ==================================
+  //! This section is for the Controller related Methods [init, close, etc..]
+  //============================================================================
+
   @override
   void onInit() {
     super.onInit();
     _fetchDataBaseFromStorage();
+    pageViewController = PageController();
   }
+
+  //============================================================================
+  @override
+  void onClose() {
+    pageViewController.dispose();
+  }
+  //============================================================================
+  //! This section is for the Local Storage Methods.
+  //============================================================================
 
   void _fetchDataBaseFromStorage() {
     try {
@@ -138,6 +152,8 @@ class HomeController extends GetxController {
   }
 
   //============================================================================
+  //! This section is for the Painting Methods.
+  //============================================================================
   void addPoint(Offset point) {
     // to only draw in it's specified area [respect appbar and bottom]
     if (point.direction <= 0.0) return;
@@ -158,7 +174,7 @@ class HomeController extends GetxController {
         title,
         message,
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: AppColors.scaffoldBacgroundColor,
+        backgroundColor: AppColors.scaffoldBackgroundColor,
         snackStyle: SnackStyle.FLOATING,
       );
     } catch (e) {
@@ -327,6 +343,8 @@ class HomeController extends GetxController {
         pointMode: settingsController.pointsMode,
         strokeWidth: settingsController.strokeWidth,
       );
+  //============================================================================
+  //! This section is for the pageView related Methods
   //============================================================================
 
 }

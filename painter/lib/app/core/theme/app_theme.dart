@@ -1,30 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import './app_colors.dart';
 
 class AppTheme {
+  // TO prevent normal instanciation.
+  AppTheme._();
+
   static final appTheme = ThemeData(
-    scaffoldBackgroundColor: AppColors.scaffoldBacgroundColor,
+    scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
     textTheme: TextTheme(
-      button: TextStyle(fontSize: 30.0),
+      button: TextStyle(fontSize: Get.height * 0.04 * Get.textScaleFactor),
       subtitle1: TextStyle(
-        fontSize: 20.0,
+        fontSize: Get.height * 0.04 * Get.textScaleFactor,
         fontWeight: FontWeight.bold,
+        fontFamily: 'Nunito',
+      ),
+      headline3: TextStyle(
+        fontSize: Get.height * 0.055 * Get.textScaleFactor,
+        color: AppColors.white,
         fontFamily: 'Nunito',
       ),
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: AppColors.scaffoldBacgroundColor,
-      titleTextStyle: TextStyle(
-        color: AppColors.primaryColor,
-        fontWeight: FontWeight.bold,
-        fontSize: 24.0,
-        fontFamily: 'Nunito',
-      ),
-      iconTheme: IconThemeData(
-        color: Colors.black,
-      ),
-      actionsIconTheme: IconThemeData(color: Colors.black),
+      backgroundColor: AppColors.scaffoldBackgroundColor,
     ),
   );
 }

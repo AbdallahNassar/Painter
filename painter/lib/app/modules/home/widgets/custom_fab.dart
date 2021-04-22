@@ -30,7 +30,7 @@ class CustomFAB extends GetView<HomeController> {
         tooltip: 'Tools',
         children: [
           SpeedDialChild(
-            backgroundColor: AppColors.scaffoldBacgroundColor,
+            backgroundColor: AppColors.scaffoldBackgroundColor,
             labelStyle: _fabTextStyle(),
             child: RotatedBox(
               quarterTurns: 1,
@@ -47,7 +47,7 @@ class CustomFAB extends GetView<HomeController> {
             ),
           ),
           SpeedDialChild(
-            backgroundColor: AppColors.scaffoldBacgroundColor,
+            backgroundColor: AppColors.scaffoldBackgroundColor,
             labelStyle: _fabTextStyle(),
             child: RotatedBox(
               quarterTurns: 1,
@@ -64,7 +64,7 @@ class CustomFAB extends GetView<HomeController> {
             ),
           ),
           SpeedDialChild(
-            backgroundColor: AppColors.scaffoldBacgroundColor,
+            backgroundColor: AppColors.scaffoldBackgroundColor,
             labelStyle: _fabTextStyle(),
             child: RotatedBox(
               quarterTurns: 1,
@@ -81,7 +81,7 @@ class CustomFAB extends GetView<HomeController> {
             ),
           ),
           SpeedDialChild(
-            backgroundColor: AppColors.scaffoldBacgroundColor,
+            backgroundColor: AppColors.scaffoldBackgroundColor,
             labelStyle: _fabTextStyle(),
             child: RotatedBox(
               quarterTurns: 1,

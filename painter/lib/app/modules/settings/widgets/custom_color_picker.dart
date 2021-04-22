@@ -31,7 +31,7 @@ class CustomColorPalette extends StatelessWidget {
       ),
       style: ButtonStyle(
         overlayColor: MaterialStateProperty.all(
-          AppColors.scaffoldBacgroundColor,
+          AppColors.scaffoldBackgroundColor,
         ),
       ),
       onPressed: null,

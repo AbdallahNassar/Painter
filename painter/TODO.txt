@@ -1,5 +1,9 @@
 => redesign home page 
+=> add arabic language
+=> add night mode
+=> maybe reposition paint color ??
 => show pen icon on long press
+
 
 
 
