@@ -5,6 +5,12 @@ import 'package:painter/app/core/theme/app_colors.dart';
 import 'package:painter/app/modules/home/controllers/home_controller.dart';
 
 class CustomFAB extends GetView<HomeController> {
+  //================================ Properties ================================
+  // the index where the [FAB] is being shown, to perfom it's operation on
+  // the correct [Paintinr]
+  final int index;
+  //============================== Constructor =================================
+  CustomFAB(this.index);
   //================================= Methods ==================================
   TextStyle _fabTextStyle() => TextStyle(
         fontSize: 16.0,
@@ -30,7 +36,7 @@ class CustomFAB extends GetView<HomeController> {
         tooltip: 'Tools',
         children: [
           SpeedDialChild(
-            backgroundColor: AppColors.scaffoldBacgroundColor,
+            backgroundColor: AppColors.scaffoldBackgroundColor,
             labelStyle: _fabTextStyle(),
             child: RotatedBox(
               quarterTurns: 1,
@@ -47,7 +53,7 @@ class CustomFAB extends GetView<HomeController> {
             ),
           ),
           SpeedDialChild(
-            backgroundColor: AppColors.scaffoldBacgroundColor,
+            backgroundColor: AppColors.scaffoldBackgroundColor,
             labelStyle: _fabTextStyle(),
             child: RotatedBox(
               quarterTurns: 1,
@@ -64,7 +70,7 @@ class CustomFAB extends GetView<HomeController> {
             ),
           ),
           SpeedDialChild(
-            backgroundColor: AppColors.scaffoldBacgroundColor,
+            backgroundColor: AppColors.scaffoldBackgroundColor,
             labelStyle: _fabTextStyle(),
             child: RotatedBox(
               quarterTurns: 1,
@@ -81,7 +87,7 @@ class CustomFAB extends GetView<HomeController> {
             ),
           ),
           SpeedDialChild(
-            backgroundColor: AppColors.scaffoldBacgroundColor,
+            backgroundColor: AppColors.scaffoldBackgroundColor,
             labelStyle: _fabTextStyle(),
             child: RotatedBox(
               quarterTurns: 1,

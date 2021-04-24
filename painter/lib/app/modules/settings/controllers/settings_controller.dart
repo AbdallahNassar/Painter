@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:painter/app/data/models/my_color.dart';
 import 'package:painter/app/modules/home/controllers/home_controller.dart';
@@ -16,7 +15,7 @@ class SettingsController extends GetxController {
 
   // var to hold the value while it's being changed by the
   // slider, [Obs] to rebuild the widget.
-  var _strokeColor = MyColor(0xff000000).obs;
+  var _strokeColor = MyColor(0xffffffff).obs;
   var _pointsMode = PointMode.points.obs;
   var _strokeWitdth = 5.0.obs;
   //================================= Methods ==================================
@@ -45,21 +44,22 @@ class SettingsController extends GetxController {
   double get maxPenSize => 20.0;
 
   //============================================================================
-  set setStrokeWidth(double newVal) {
+  void setStrokeWidth(int index, double newVal) {
+    // the index of the [Painting] to make new list in
     // save the new value, to update the widget that observes this var
     _strokeWitdth.value = newVal;
     homeController.makeNewList();
   }
 
   //============================================================================
-  set setColor(int newColorVal) {
+  void setColor(int index, int newColorVal) {
     _strokeColor.value = MyColor(newColorVal);
 
     homeController.makeNewList();
   }
 
   //============================================================================
-  set setPointMode(PointMode newVal) {
+  void setPointMode(int index, PointMode newVal) {
     _pointsMode.value = newVal;
     homeController.makeNewList();
   }

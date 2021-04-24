@@ -18,7 +18,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final Widget? leading;
   //================================ Constructor ===============================
   CustomAppBar({
-    required this.text,
+    this.text = ' ',
     this.leading,
     this.haveBackArrow = true,
     this.backgroundColor = Colors.blue,
@@ -35,12 +35,11 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
         fit: BoxFit.scaleDown,
         child: Text(
           text,
-          style: AppTheme.appTheme.appBarTheme.titleTextStyle,
         ),
       ),
       leading: leading,
       centerTitle: true,
-      backgroundColor: AppTheme.appTheme.appBarTheme.backgroundColor,
+      backgroundColor: backgroundColor,
       actionsIconTheme: AppTheme.appTheme.appBarTheme.actionsIconTheme,
       iconTheme: AppTheme.appTheme.appBarTheme.iconTheme,
       actions: actions,

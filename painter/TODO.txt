@@ -1,5 +1,7 @@
-=> add local storage [Home page will be a list view of previous paintings]
 => redesign home page 
+=> add arabic language
+=> add night mode
+=> maybe reposition paint color ??
 => show pen icon on long press
 
 
@@ -7,4 +9,3 @@
 
 
 
-=> convert [MyPaint] to and from Json

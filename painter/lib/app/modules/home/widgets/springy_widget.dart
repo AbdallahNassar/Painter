@@ -9,6 +9,7 @@ class SpringyWidget extends StatefulWidget {
   final Widget child;
   final Duration duration;
   final Alignment alignment;
+
   //================================ Constructor ===============================
   const SpringyWidget({
     required this.child,

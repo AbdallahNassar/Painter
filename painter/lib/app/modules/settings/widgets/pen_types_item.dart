@@ -3,11 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:painter/app/core/theme/app_colors.dart';
+import 'package:painter/app/modules/painting/controllers/painting_controller.dart';
 import 'package:painter/app/modules/settings/controllers/settings_controller.dart';
 
 class PenTypesItem extends StatelessWidget {
   //================================ Properties ================================
   final _settingsController = Get.find<SettingsController>();
+  final _paintingController = Get.find<PaintingController>();
   final String imagePath;
   final PointMode pointMode;
   //================================ Constructor ===============================
@@ -24,10 +26,8 @@ class PenTypesItem extends StatelessWidget {
       () => Expanded(
         flex: _settingsController.pointsMode == pointMode ? 12 : 10,
         child: GestureDetector(
-          onTap: () {
-            _settingsController.setPointMode = pointMode;
-            // _settingsController.pointsMode == pointMode
-          },
+          onTap: () => _settingsController.setPointMode(
+              _paintingController.currentActivePaintingIndex, pointMode),
           child: AnimatedContainer(
             duration: Duration(milliseconds: 500),
             curve: Curves.fastLinearToSlowEaseIn,

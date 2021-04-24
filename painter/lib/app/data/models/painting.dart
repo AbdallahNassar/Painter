@@ -17,7 +17,7 @@ class Painting {
   //================================ Constructor ===============================
   Painting(
     this.pointsList, {
-    this.color = const MyColor(0xff000000),
+    this.color = const MyColor(0xffffffff),
     this.pointMode = PointMode.points,
     this.strokeWidth = 5.0,
   }) {

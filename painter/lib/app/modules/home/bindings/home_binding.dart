@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:painter/app/modules/painting/controllers/painting_controller.dart';
 import 'package:painter/app/modules/settings/controllers/settings_controller.dart';
 
 import '../controllers/home_controller.dart';
@@ -13,6 +14,9 @@ class HomeBinding extends Bindings {
     );
     Get.lazyPut<SettingsController>(
       () => SettingsController(),
+    );
+    Get.lazyPut<PaintingController>(
+      () => PaintingController(),
     );
   }
 }
