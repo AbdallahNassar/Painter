@@ -442,8 +442,15 @@ class HomeController extends GetxController {
   //============================================================================
   // this will add a new 'painting' to the home page view
   void addNewPaintingSlide() {
+    // add a new [painting] to the painting slides
     _bigList.addIf(
       _bigList.last.last.value.pointsList.isNotEmpty,
+      [newPaint.obs].obs,
+    );
+    // add a new [painting] to the trash list, to correspond with the slides
+    // e.g. Each [painting] has a corresponding [ Painting Trash List Entry]
+    _trashList.addIf(
+      _trashList.last.last.value.pointsList.isNotEmpty,
       [newPaint.obs].obs,
     );
   }
