@@ -76,7 +76,7 @@ class HomeController extends GetxController {
   //============================================================================
   set setSettingsController(SettingsController inputSettingsController) =>
       settingsController = inputSettingsController;
-  
+
   //============================================================================
   //! This section is for the Local Storage Methods.
   //============================================================================
@@ -161,25 +161,12 @@ class HomeController extends GetxController {
   // lists lengths change.
   // I used 'First' as This will be the last thing to change
   // bool  isUndoActive(paintingController.currentActivePaintingIndex) => _slidesList[paintingController.currentActivePaintingIndex].value.pointsList.isNotEmpty;
-  bool get isUndoActive =>
-      _bigList[paintingController.currentActivePaintingIndex]
-          .first
-          .value
-          .pointsList
-          .isNotEmpty;
+  bool get isUndoActive => _bigList[0].first.value.pointsList.isNotEmpty;
   //============================================================================
 
   bool get isRedoActive =>
-      _trashList[paintingController.currentActivePaintingIndex]
-          .first
-          .value
-          .pointsList
-          .isNotEmpty ||
-      _trashList[paintingController.currentActivePaintingIndex]
-          .last
-          .value
-          .pointsList
-          .isNotEmpty;
+      _trashList[0].first.value.pointsList.isNotEmpty ||
+      _trashList[0].last.value.pointsList.isNotEmpty;
   // when there are points in trashList and there aren't in pointsList
   //============================================================================
 
@@ -440,7 +427,8 @@ class HomeController extends GetxController {
   //============================================================================
   // this will add a new 'painting' to the home page view
   void addNewPaintingSlide() {
-    _bigList.add(
+    _bigList.addIf(
+      _bigList.last.last.value.pointsList.isNotEmpty,
       [newPaint.obs].obs,
     );
   }
