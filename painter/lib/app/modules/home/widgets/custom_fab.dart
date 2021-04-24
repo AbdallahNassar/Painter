@@ -5,6 +5,12 @@ import 'package:painter/app/core/theme/app_colors.dart';
 import 'package:painter/app/modules/home/controllers/home_controller.dart';
 
 class CustomFAB extends GetView<HomeController> {
+  //================================ Properties ================================
+  // the index where the [FAB] is being shown, to perfom it's operation on
+  // the correct [Paintinr]
+  final int index;
+  //============================== Constructor =================================
+  const CustomFAB(this.index);
   //================================= Methods ==================================
   TextStyle _fabTextStyle() => TextStyle(
         fontSize: 16.0,
@@ -40,7 +46,9 @@ class CustomFAB extends GetView<HomeController> {
                     Icons.undo,
                     size: 30.0,
                   ),
-                  onPressed: controller.isUndoActive ? controller.undo : null,
+                  onPressed: () => controller.isUndoActive(index)
+                      ? controller.undo(index)
+                      : null,
                   highlightColor: Colors.transparent,
                 ),
               ),
@@ -57,7 +65,9 @@ class CustomFAB extends GetView<HomeController> {
                     Icons.redo,
                     size: 30.0,
                   ),
-                  onPressed: controller.isRedoActive ? controller.redo : null,
+                  onPressed: () => controller.isRedoActive(index)
+                      ? controller.redo(index)
+                      : null,
                   highlightColor: Colors.transparent,
                 ),
               ),
@@ -73,8 +83,9 @@ class CustomFAB extends GetView<HomeController> {
                   icon: Icon(
                     Icons.cleaning_services,
                   ),
-                  onPressed:
-                      controller.isUndoActive ? controller.clearPoints : null,
+                  onPressed: () => controller.isUndoActive(index)
+                      ? controller.clearPoints(index)
+                      : null,
                   highlightColor: Colors.transparent,
                 ),
               ),
@@ -88,8 +99,9 @@ class CustomFAB extends GetView<HomeController> {
               child: Obx(
                 () => IconButton(
                   icon: Icon(Icons.restore),
-                  onPressed:
-                      controller.isRestoreActive ? controller.restore : null,
+                  onPressed: () => controller.isRestoreActive(index)
+                      ? controller.restore(index)
+                      : null,
                   highlightColor: Colors.transparent,
                 ),
               ),

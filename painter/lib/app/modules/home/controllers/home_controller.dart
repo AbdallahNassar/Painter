@@ -19,8 +19,8 @@ class HomeController extends GetxController {
   late final PageController pageViewController;
   // this will be my interface with the device local storage
   final _storageDriver = GetStorage();
+
   //============================================================================
-  //
   // this will hold the different [Painting][] Structures, will be used
   // to have different styles for each list .. so create a new list in the
   // [Big List] is created where the new changes will be applied
@@ -35,16 +35,15 @@ class HomeController extends GetxController {
   //
   // this will be empty, and then be populated with a method that fetches
   // data from stroage
-  var _bigList = <Rx<Painting>>[].obs;
-
-  var slidesList = <RxList<Rx<Painting>>>[];
-
-  // this will hold the deleted points, for later redoing.
+  //
+  // the will be a list of Paintings Slides, this will be used in the home
+  // page slides, to add page views from it
+  //
+  // _trashList will hold the deleted points, for later redoing.
   // this was made into [obs] to allow the 'isRedoActive' to update
   // automagically when the [trashlist] length change
-  var _trashList = [
-    Painting([]).obs,
-  ].obs;
+
+  var _bigList, _trashList = <RxList<Rx<Painting>>>[<Rx<Painting>>[].obs].obs;
 
   // this will be the temp variable to hold the distance between two points
   // [drawn point and eraser]
@@ -52,17 +51,7 @@ class HomeController extends GetxController {
   //================================ Getters ===================================
   // this will give the entire big list back, for redrawing all the small
   // lists in that list, each with its syle
-  List<Rx<Painting>> get bigList => _bigList;
-  // these will be reactive as they will automagically change when the
-  // lists lengths change.
-  // I used 'First' as This will be the last thing to change
-  bool get isUndoActive => _bigList.first.value.pointsList.isNotEmpty;
-  bool get isRedoActive =>
-      _trashList.first.value.pointsList.isNotEmpty ||
-      _trashList.last.value.pointsList.isNotEmpty;
-  // when there are points in trashList and there aren't in pointsList
-  bool get isRestoreActive => (isRedoActive && !isUndoActive);
-
+  List<RxList<Rx<Painting>>> get bigList => _bigList;
   //================================= Methods ==================================
   //! This section is for the Controller related Methods [init, close, etc..]
   //============================================================================
@@ -95,10 +84,13 @@ class HomeController extends GetxController {
       if (jsonDataBase == '') {
         print(
             'No data was found in the storage .. strating with an empty list');
-        _bigList = <Rx<Painting>>[Painting([]).obs].obs;
+        _bigList = [
+          <Rx<Painting>>[Painting([]).obs].obs
+        ].obs;
       }
       //? Case2]  Found data in storage, decode it and parse it.
       else {
+        //TODO: hande local storage
         _bigList = _decodeDataBase(jsonDataBase);
       }
     } catch (e) {
@@ -158,11 +150,27 @@ class HomeController extends GetxController {
   //============================================================================
   //! This section is for the Painting Methods.
   //============================================================================
-  void addPoint(Offset point) {
+  // these will be reactive as they will automagically change when the
+  // lists lengths change.
+  // I used 'First' as This will be the last thing to change
+  // bool  isUndoActive(index) => _slidesList[index].value.pointsList.isNotEmpty;
+  bool isUndoActive(index) => _bigList[index].first.value.pointsList.isNotEmpty;
+  //============================================================================
+
+  bool isRedoActive(index) =>
+      _trashList[index].first.value.pointsList.isNotEmpty ||
+      _trashList[index].last.value.pointsList.isNotEmpty;
+  // when there are points in trashList and there aren't in pointsList
+  //============================================================================
+
+  bool isRestoreActive(index) => (isRedoActive(index) && !isUndoActive(index));
+  //============================================================================
+
+  void addPoint(int index, Offset point) {
     // to only draw in it's specified area [respect appbar and bottom]
     if (point.direction <= 0.0) return;
     // [.obs] classes have a unique ways of updating
-    _bigList.last.update((val) {
+    _bigList[index].last.update((val) {
       val!.pointsList.add(MyOffset(point.dx, point.dy));
     });
   }
@@ -187,9 +195,9 @@ class HomeController extends GetxController {
   }
 
   //============================================================================
-  void erase(Offset point, double minDeleteDistance) {
+  void erase(int index, Offset point, double minDeleteDistance) {
     //the [GetX] way of updating an [.obs] object
-    _bigList.forEach(
+    _bigList[index].forEach(
       (painting) {
         painting.update(
           (val) {
@@ -198,7 +206,7 @@ class HomeController extends GetxController {
               // check the condition for deletion
               if (_calcuateDistance(point, element) <= minDeleteDistance) {
                 // update the trashlist and add that element before it's deleted
-                _trashList.last.update((trashVal) {
+                _trashList[index].last.update((trashVal) {
                   trashVal!.pointsList.add(element);
                 });
                 return true;
@@ -220,28 +228,28 @@ class HomeController extends GetxController {
   }
 
   //============================================================================
-  void undo() {
+  void undo(int index) {
     // check to see the style of [Painting] [color.. width.. etc] of the
     // [bigList] matches the style of [Painting] for the trashList
     if (!_isSamePaint(
-      _bigList.last.value,
-      _trashList.last.value,
+      _bigList[index].last.value,
+      _trashList[index].last.value,
     ))
       // if so, take the style of [Painting] of the points in the trash list
-      _trashList.add(
+      _trashList[index].add(
         Painting(
           [],
-          color: _bigList.last.value.color,
-          strokeWidth: _bigList.last.value.strokeWidth,
-          pointMode: _bigList.last.value.pointMode,
+          color: _bigList[index].last.value.color,
+          strokeWidth: _bigList[index].last.value.strokeWidth,
+          pointMode: _bigList[index].last.value.pointMode,
         ).obs,
       );
 
     // update the bigList's Last element [Painting] by removing it's last elem
-    _bigList.last.update((bigVal) {
+    _bigList[index].last.update((bigVal) {
       // update the trashlist by adding the element I just removed from the
       // big List
-      _trashList.last.update((val) {
+      _trashList[index].last.update((val) {
         val!.pointsList.add(
           bigVal!.pointsList.removeLast(),
         );
@@ -250,42 +258,44 @@ class HomeController extends GetxController {
 
     // If I reach the end of the list inside the [bigList], I remove it and go
     // onto the list before it in the [BigList] , bigList[2] ==> bigList[1]
-    if (_bigList.last.value.pointsList.isEmpty && _bigList.length > 1) {
-      _bigList.removeLast();
+    if (_bigList[index].last.value.pointsList.isEmpty &&
+        _bigList[index].length > 1) {
+      _bigList[index].removeLast();
     }
   }
 
   //============================================================================
-  void redo() {
+  void redo(int index) {
     // check to see the style of [Painting] [color.. width.. etc] of the
     // [bigList] matches the style of [Painting] for the trashList
     if (!_isSamePaint(
-      _bigList.last.value,
-      _trashList.last.value,
+      _bigList[index].last.value,
+      _trashList[index].last.value,
     ))
       // if so, take the style of [Painting] of the points in the big list
       _bigList.add(
         Painting(
           [],
-          color: _trashList.last.value.color,
-          strokeWidth: _trashList.last.value.strokeWidth,
-          pointMode: _trashList.last.value.pointMode,
+          color: _trashList[index].last.value.color,
+          strokeWidth: _trashList[index].last.value.strokeWidth,
+          pointMode: _trashList[index].last.value.pointMode,
         ).obs,
       );
 
     // update the bigList's Last element [Painting] by removing it's last elem
-    _trashList.last.update((trashVal) {
+    _trashList[index].last.update((trashVal) {
       // update the trashlist by adding the element I just removed from the
       // big List
-      _bigList.last.update((val) {
+      _bigList[index].last.update((val) {
         val!.pointsList.add(
           trashVal!.pointsList.removeLast(),
         );
       });
     });
 
-    if (_trashList.last.value.pointsList.isEmpty && _trashList.length > 1) {
-      _trashList.removeLast();
+    if (_trashList[index].last.value.pointsList.isEmpty &&
+        _trashList[index].length > 1) {
+      _trashList[index].removeLast();
     }
   }
   //============================================================================
@@ -298,30 +308,30 @@ class HomeController extends GetxController {
   }
 
   //============================================================================
-  void clearPoints() {
+  void clearPoints(int index) {
     // put all s  list into a trash list
     // using this method to only take the values from [_bigList]
     // into [trashList], otherwise the two become one and If I clear one,
     // I clear the other.
-    _trashList.value = List.from(_bigList);
+    _trashList[index].value = List.from(_bigList[index]);
     // clear the big list, now bigList = []
-    _bigList.clear();
+    _bigList[index].clear();
     // insert a new list into the bigList, this will be my 'biglist.last'
     // start from my last prefrences [preferred settings]
-    _bigList.add(
-      _getNewPaint().obs,
+    _bigList[index].add(
+      newPaint.obs,
     );
   }
 
   //============================================================================
-  void restore() {
+  void restore(int index) {
     // points list will now = trashlist
-    _bigList.value = List.from(_trashList);
+    _bigList[index].value = List.from(_trashList[index]);
     // remove trash list
-    _trashList.clear();
+    _trashList[index].clear();
     // insert a new list into the trashList, this will be my 'trashList.last'
-    _trashList.add(
-      _getNewPaint().obs,
+    _trashList[index].add(
+      newPaint.obs,
     );
   }
 
@@ -329,10 +339,10 @@ class HomeController extends GetxController {
   // will be used to
   // 1) increment the active index counter
   // 2) create a new list in the [Big List]
-  void makeNewList() {
-    if (_bigList.last.value.pointsList.isNotEmpty) {
-      _bigList.add(
-        _getNewPaint().obs,
+  void makeNewList(int index) {
+    if (_bigList[index].last.value.pointsList.isNotEmpty) {
+      _bigList[index].add(
+        newPaint.obs,
       );
     }
   }
@@ -343,7 +353,7 @@ class HomeController extends GetxController {
   //============================================================================
   // will be called when I clear the [bigList]/[trashList] and this will be
   // my List.last
-  Painting _getNewPaint() => Painting(
+  Painting get newPaint => Painting(
         [],
         color: settingsController.strokeColor,
         pointMode: settingsController.pointsMode,
@@ -362,6 +372,10 @@ class HomeController extends GetxController {
   }
 
   //============================================================================
-  void addNewPaintingSlide() {}
+  // this will add a new 'painting' to the home page view
+  void addNewPaintingSlide() {
+    _bigList.addIf(_bigList.last.isNotEmpty, <Rx<Painting>>[].obs);
+  }
+
   //============================================================================
 }

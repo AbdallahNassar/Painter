@@ -49,10 +49,6 @@ class HomeView extends GetView<HomeController> {
         // this will add a new slide in the home page
         onPressed: controller.addNewPaintingSlide,
       ),
-      // floatingActionButton: Container(
-      //   child: CustomFAB(),
-      //   height: 50.0,
-      // ),
     );
   }
 }

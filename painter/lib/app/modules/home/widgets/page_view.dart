@@ -17,27 +17,23 @@ class MyPageView extends StatelessWidget {
   //============================================================================
   @override
   Widget build(BuildContext context) {
-    return PageView(
+    return PageView.builder(
+      itemCount: 1,
       controller: homeController.pageViewController,
-      children: [
-        Padding(
-          padding: EdgeInsets.all(Get.height * 0.015),
-          child: PaintingBoard(),
-        ),
-        Padding(
-          padding: EdgeInsets.all(Get.height * 0.015),
-          child: PaintingBoard(),
-        ),
-      ],
+      itemBuilder: (context, index) => Padding(
+        padding: EdgeInsets.all(Get.height * 0.015),
+        child: PaintingSlide(index),
+      ),
     );
   }
 }
 
-class PaintingBoard extends StatelessWidget {
+class PaintingSlide extends StatelessWidget {
   //================================ Properties ================================
-  //
+  // this will be used to access the correct list for each slide
+  final int index;
   //================================ Constructor ===============================
-
+  const PaintingSlide(this.index);
   //================================= Methods ==================================
 
   //============================================================================
@@ -45,11 +41,13 @@ class PaintingBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     return OpenContainer(
       closedBuilder: (_, closed) => ScalingWidget(
-        child: HomeBody(),
+        child: HomeBody(index),
         height: 200,
         width: 200,
       ),
-      openBuilder: (_, open) => PaintingView(),
+      openBuilder: (_, open) => PaintingView(
+        index: index,
+      ),
       closedColor: Colors.transparent,
       closedShape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),

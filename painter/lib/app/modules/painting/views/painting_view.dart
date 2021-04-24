@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:painter/app/core/theme/app_colors.dart';
 import 'package:painter/app/modules/home/controllers/home_controller.dart';
+import 'package:painter/app/modules/home/widgets/custom_fab.dart';
 import 'package:painter/app/modules/home/widgets/home_body.dart';
 import 'package:painter/app/modules/home/widgets/scaling_widget.dart';
 import 'package:painter/app/modules/settings/views/settings_view.dart';
@@ -12,9 +13,12 @@ import '../controllers/painting_controller.dart';
 
 class PaintingView extends GetView<PaintingController> {
   //================================ Properties ================================
+  final int index;
   final homeController = Get.find<HomeController>();
   //================================ Constructor ===============================
-
+  PaintingView({this.index = 0}) {
+    controller.currentActivePaintingIndex = index;
+  }
   //================================= Methods ==================================
 
   //============================================================================
@@ -38,6 +42,7 @@ class PaintingView extends GetView<PaintingController> {
               transition: Transition.cupertino,
               duration: Duration(milliseconds: 400),
               popGesture: true,
+              arguments: index,
             ),
           ),
         ],
@@ -45,10 +50,14 @@ class PaintingView extends GetView<PaintingController> {
       ),
       body: SafeArea(
         child: ScalingWidget(
-          child: HomeBody(),
+          child: HomeBody(index),
           height: Get.height,
           width: Get.width,
         ),
+      ),
+      floatingActionButton: Container(
+        height: Get.height * 0.064,
+        child: CustomFAB(index),
       ),
     );
   }

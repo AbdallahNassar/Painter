@@ -44,23 +44,24 @@ class SettingsController extends GetxController {
   double get maxPenSize => 20.0;
 
   //============================================================================
-  set setStrokeWidth(double newVal) {
+  void setStrokeWidth(int index, double newVal) {
+    // the index of the [Painting] to make new list in
     // save the new value, to update the widget that observes this var
     _strokeWitdth.value = newVal;
-    homeController.makeNewList();
+    homeController.makeNewList(index);
   }
 
   //============================================================================
-  set setColor(int newColorVal) {
+  void setColor(int index, int newColorVal) {
     _strokeColor.value = MyColor(newColorVal);
 
-    homeController.makeNewList();
+    homeController.makeNewList(index);
   }
 
   //============================================================================
-  set setPointMode(PointMode newVal) {
+  void setPointMode(int index, PointMode newVal) {
     _pointsMode.value = newVal;
-    homeController.makeNewList();
+    homeController.makeNewList(index);
   }
 
   //============================================================================
