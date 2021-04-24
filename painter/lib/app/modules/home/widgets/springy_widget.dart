@@ -9,12 +9,10 @@ class SpringyWidget extends StatefulWidget {
   final Widget child;
   final Duration duration;
   final Alignment alignment;
-  // the index of the [painting] list that i'll be deleting from.
-  final int index;
+
   //================================ Constructor ===============================
   const SpringyWidget({
     required this.child,
-    required this.index,
     this.duration = const Duration(milliseconds: 1000),
     this.alignment = Alignment.bottomRight,
   });
@@ -110,7 +108,6 @@ class _SpringyWidgetState extends State<SpringyWidget>
 
         // remove the point where the widget is at
         homeController.erase(
-          widget.index,
           details.localPosition,
           settingsController.eraserSize,
         );

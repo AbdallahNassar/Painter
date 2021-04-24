@@ -14,6 +14,8 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     //================================ Parameters ==============================
+    // I had to use this method as I went into infinity loop, as
+    // [HomeController] has [SettingController] initialized in it, and vice versa
     controller.setSettingsController = (_settingsController);
     //==========================================================================
     return Scaffold(

@@ -9,6 +9,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:painter/app/core/theme/app_colors.dart';
 import 'package:painter/app/data/models/my_offset.dart';
 import 'package:painter/app/data/models/painting.dart';
+import 'package:painter/app/modules/painting/controllers/painting_controller.dart';
 import 'package:painter/app/modules/settings/controllers/settings_controller.dart';
 
 class HomeController extends GetxController {
@@ -16,7 +17,8 @@ class HomeController extends GetxController {
   // this will hold an instance of [settingController], I can't use [Get.find]
   // as it would enter an infitie loop as I'm also calling [Get.find] for the
   // [HomeController] in the [SettingController]
-  var settingsController;
+  late SettingsController settingsController;
+  PaintingController paintingController = Get.find<PaintingController>();
   late final PageController pageViewController;
   // this will be my interface with the device local storage
   final _storageDriver = GetStorage();
@@ -70,6 +72,11 @@ class HomeController extends GetxController {
   void onClose() {
     pageViewController.dispose();
   }
+
+  //============================================================================
+  set setSettingsController(SettingsController inputSettingsController) =>
+      settingsController = inputSettingsController;
+  
   //============================================================================
   //! This section is for the Local Storage Methods.
   //============================================================================
@@ -153,24 +160,37 @@ class HomeController extends GetxController {
   // these will be reactive as they will automagically change when the
   // lists lengths change.
   // I used 'First' as This will be the last thing to change
-  // bool  isUndoActive(index) => _slidesList[index].value.pointsList.isNotEmpty;
-  bool isUndoActive(index) => _bigList[index].first.value.pointsList.isNotEmpty;
+  // bool  isUndoActive(paintingController.currentActivePaintingIndex) => _slidesList[paintingController.currentActivePaintingIndex].value.pointsList.isNotEmpty;
+  bool get isUndoActive =>
+      _bigList[paintingController.currentActivePaintingIndex]
+          .first
+          .value
+          .pointsList
+          .isNotEmpty;
   //============================================================================
 
-  bool isRedoActive(index) =>
-      _trashList[index].first.value.pointsList.isNotEmpty ||
-      _trashList[index].last.value.pointsList.isNotEmpty;
+  bool get isRedoActive =>
+      _trashList[paintingController.currentActivePaintingIndex]
+          .first
+          .value
+          .pointsList
+          .isNotEmpty ||
+      _trashList[paintingController.currentActivePaintingIndex]
+          .last
+          .value
+          .pointsList
+          .isNotEmpty;
   // when there are points in trashList and there aren't in pointsList
   //============================================================================
 
-  bool isRestoreActive(index) => (isRedoActive(index) && !isUndoActive(index));
+  bool get isRestoreActive => (isRedoActive && !isUndoActive);
   //============================================================================
 
-  void addPoint(int index, Offset point) {
+  void addPoint(Offset point) {
     // to only draw in it's specified area [respect appbar and bottom]
     if (point.direction <= 0.0) return;
     // [.obs] classes have a unique ways of updating
-    _bigList[index].last.update(
+    _bigList[paintingController.currentActivePaintingIndex].last.update(
       (val) {
         val!.pointsList.add(
           MyOffset(point.dx, point.dy),
@@ -199,9 +219,9 @@ class HomeController extends GetxController {
   }
 
   //============================================================================
-  void erase(int index, Offset point, double minDeleteDistance) {
+  void erase(Offset point, double minDeleteDistance) {
     //the [GetX] way of updating an [.obs] object
-    _bigList[index].forEach(
+    _bigList[paintingController.currentActivePaintingIndex].forEach(
       (painting) {
         painting.update(
           (val) {
@@ -210,7 +230,9 @@ class HomeController extends GetxController {
               // check the condition for deletion
               if (_calcuateDistance(point, element) <= minDeleteDistance) {
                 // update the trashlist and add that element before it's deleted
-                _trashList[index].last.update((trashVal) {
+                _trashList[paintingController.currentActivePaintingIndex]
+                    .last
+                    .update((trashVal) {
                   trashVal!.pointsList.add(element);
                 });
                 return true;
@@ -232,28 +254,41 @@ class HomeController extends GetxController {
   }
 
   //============================================================================
-  void undo(int index) {
+  void undo() {
     // check to see the style of [Painting] [color.. width.. etc] of the
     // [bigList] matches the style of [Painting] for the trashList
     if (!_isSamePaint(
-      _bigList[index].last.value,
-      _trashList[index].last.value,
+      _bigList[paintingController.currentActivePaintingIndex].last.value,
+      _trashList[paintingController.currentActivePaintingIndex].last.value,
     ))
       // if so, take the style of [Painting] of the points in the trash list
-      _trashList[index].add(
+      _trashList[paintingController.currentActivePaintingIndex].add(
         Painting(
           [],
-          color: _bigList[index].last.value.color,
-          strokeWidth: _bigList[index].last.value.strokeWidth,
-          pointMode: _bigList[index].last.value.pointMode,
+          color: _bigList[paintingController.currentActivePaintingIndex]
+              .last
+              .value
+              .color,
+          strokeWidth: _bigList[paintingController.currentActivePaintingIndex]
+              .last
+              .value
+              .strokeWidth,
+          pointMode: _bigList[paintingController.currentActivePaintingIndex]
+              .last
+              .value
+              .pointMode,
         ).obs,
       );
 
     // update the bigList's Last element [Painting] by removing it's last elem
-    _bigList[index].last.update((bigVal) {
+    _bigList[paintingController.currentActivePaintingIndex]
+        .last
+        .update((bigVal) {
       // update the trashlist by adding the element I just removed from the
       // big List
-      _trashList[index].last.update((val) {
+      _trashList[paintingController.currentActivePaintingIndex]
+          .last
+          .update((val) {
         val!.pointsList.add(
           bigVal!.pointsList.removeLast(),
         );
@@ -262,44 +297,65 @@ class HomeController extends GetxController {
 
     // If I reach the end of the list inside the [bigList], I remove it and go
     // onto the list before it in the [BigList] , bigList[2] ==> bigList[1]
-    if (_bigList[index].last.value.pointsList.isEmpty &&
-        _bigList[index].length > 1) {
-      _bigList[index].removeLast();
+    if (_bigList[paintingController.currentActivePaintingIndex]
+            .last
+            .value
+            .pointsList
+            .isEmpty &&
+        _bigList[paintingController.currentActivePaintingIndex].length > 1) {
+      _bigList[paintingController.currentActivePaintingIndex].removeLast();
     }
   }
 
   //============================================================================
-  void redo(int index) {
+  void redo() {
     // check to see the style of [Painting] [color.. width.. etc] of the
     // [bigList] matches the style of [Painting] for the trashList
     if (!_isSamePaint(
-      _bigList[index].last.value,
-      _trashList[index].last.value,
+      _bigList[paintingController.currentActivePaintingIndex].last.value,
+      _trashList[paintingController.currentActivePaintingIndex].last.value,
     ))
       // if so, take the style of [Painting] of the points in the big list
-      _bigList[index].add(
+      _bigList[paintingController.currentActivePaintingIndex].add(
         Painting(
           [],
-          color: _trashList[index].last.value.color,
-          strokeWidth: _trashList[index].last.value.strokeWidth,
-          pointMode: _trashList[index].last.value.pointMode,
+          color: _trashList[paintingController.currentActivePaintingIndex]
+              .last
+              .value
+              .color,
+          strokeWidth: _trashList[paintingController.currentActivePaintingIndex]
+              .last
+              .value
+              .strokeWidth,
+          pointMode: _trashList[paintingController.currentActivePaintingIndex]
+              .last
+              .value
+              .pointMode,
         ).obs,
       );
 
     // update the bigList's Last element [Painting] by removing it's last elem
-    _trashList[index].last.update((trashVal) {
+    _trashList[paintingController.currentActivePaintingIndex]
+        .last
+        .update((trashVal) {
       // update the trashlist by adding the element I just removed from the
       // big List
-      _bigList[index].last.update((val) {
+      _bigList[paintingController.currentActivePaintingIndex]
+          .last
+          .update((val) {
         val!.pointsList.add(
           trashVal!.pointsList.removeLast(),
         );
       });
     });
 
-    if (_trashList[index].last.value.pointsList.isEmpty &&
-        _trashList[index].length > 1) {
-      _trashList[index].removeLast();
+    if (_trashList[paintingController.currentActivePaintingIndex]
+            .last
+            .value
+            .pointsList
+            .isEmpty &&
+        _trashList[paintingController.currentActivePaintingIndex].length > 1) {
+      _trashList[paintingController.currentActivePaintingIndex].removeLast();
     }
   }
   //============================================================================
@@ -312,48 +368,51 @@ class HomeController extends GetxController {
   }
 
   //============================================================================
-  void clearPoints(int index) {
+  void clearPoints() {
     // put all s  list into a trash list
     // using this method to only take the values from [_bigList]
     // into [trashList], otherwise the two become one and If I clear one,
     // I clear the other.
-    _trashList[index].value = List.from(_bigList[index]);
+    _trashList[paintingController.currentActivePaintingIndex].value =
+        List.from(_bigList[paintingController.currentActivePaintingIndex]);
     // clear the big list, now bigList = []
-    _bigList[index].clear();
+    _bigList[paintingController.currentActivePaintingIndex].clear();
     // insert a new list into the bigList, this will be my 'biglist.last'
     // start from my last prefrences [preferred settings]
-    _bigList[index].add(
+    _bigList[paintingController.currentActivePaintingIndex].add(
       newPaint.obs,
     );
   }
 
   //============================================================================
-  void restore(int index) {
+  void restore() {
     // points list will now = trashlist
-    _bigList[index].value = List.from(_trashList[index]);
+    _bigList[paintingController.currentActivePaintingIndex].value =
+        List.from(_trashList[paintingController.currentActivePaintingIndex]);
     // remove trash list
-    _trashList[index].clear();
+    _trashList[paintingController.currentActivePaintingIndex].clear();
     // insert a new list into the trashList, this will be my 'trashList.last'
-    _trashList[index].add(
+    _trashList[paintingController.currentActivePaintingIndex].add(
       newPaint.obs,
     );
   }
 
   //============================================================================
   // will be used to
-  // 1) increment the active index counter
+  // 1) increment the active paintingController.currentActivePaintingIndex counter
   // 2) create a new list in the [Big List]
-  void makeNewList(int index) {
-    if (_bigList[index].last.value.pointsList.isNotEmpty) {
-      _bigList[index].add(
+  void makeNewList() {
+    if (_bigList[paintingController.currentActivePaintingIndex]
+        .last
+        .value
+        .pointsList
+        .isNotEmpty) {
+      _bigList[paintingController.currentActivePaintingIndex].add(
         newPaint.obs,
       );
     }
   }
 
-  //============================================================================
-  set setSettingsController(SettingsController inputSettingsController) =>
-      settingsController = inputSettingsController;
   //============================================================================
   // will be called when I clear the [bigList]/[trashList] and this will be
   // my List.last
@@ -367,12 +426,15 @@ class HomeController extends GetxController {
   //! This section is for the pageView related Methods
   //============================================================================
   Future<void> changePageView(
-    int newPageIndex, {
+    int index, {
     Duration duration = const Duration(milliseconds: 300),
     Curve curve = Curves.fastLinearToSlowEaseIn,
   }) async {
-    await pageViewController.animateToPage(newPageIndex,
-        duration: duration, curve: curve);
+    await pageViewController.animateToPage(
+      index,
+      duration: duration,
+      curve: curve,
+    );
   }
 
   //============================================================================

@@ -48,20 +48,20 @@ class SettingsController extends GetxController {
     // the index of the [Painting] to make new list in
     // save the new value, to update the widget that observes this var
     _strokeWitdth.value = newVal;
-    homeController.makeNewList(index);
+    homeController.makeNewList();
   }
 
   //============================================================================
   void setColor(int index, int newColorVal) {
     _strokeColor.value = MyColor(newColorVal);
 
-    homeController.makeNewList(index);
+    homeController.makeNewList();
   }
 
   //============================================================================
   void setPointMode(int index, PointMode newVal) {
     _pointsMode.value = newVal;
-    homeController.makeNewList(index);
+    homeController.makeNewList();
   }
 
   //============================================================================

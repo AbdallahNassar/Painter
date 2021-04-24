@@ -29,13 +29,11 @@ class HomeBody extends StatelessWidget {
             // takes the point to add, and the index of the [bigList] or
             // [Painting] to add into
             _homeController.addPoint(
-              index,
               details.localPosition,
             );
           },
           onPanUpdate: (details) {
             _homeController.addPoint(
-              index,
               details.localPosition,
             );
           },
@@ -60,7 +58,6 @@ class HomeBody extends StatelessWidget {
         if (Get.mediaQuery.orientation == Orientation.portrait)
           GestureDetector(
             child: SpringyWidget(
-              index: index,
               alignment: Alignment(0.89, 0.78),
               duration: Duration(milliseconds: 800),
               child: Obx(
