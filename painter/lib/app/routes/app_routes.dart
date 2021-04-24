@@ -6,6 +6,7 @@ abstract class Routes {
   static const SETTINGS = _Paths.SETTINGS;
   static const COLORPICKER = _Paths.COLORPICKER;
   static const TEST = _Paths.TEST;
+  static const PAINTING = _Paths.PAINTING;
 }
 
 abstract class _Paths {
@@ -13,4 +14,5 @@ abstract class _Paths {
   static const SETTINGS = '/settings';
   static const COLORPICKER = '/colorpicker';
   static const TEST = '/test';
+  static const PAINTING = '/painting';
 }

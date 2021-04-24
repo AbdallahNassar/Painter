@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:painter/app/modules/home/controllers/home_controller.dart';
+import 'package:painter/app/modules/painting/views/painting_view.dart';
 
 import 'home_body.dart';
 import 'scaling_widget.dart';
@@ -45,14 +46,10 @@ class PaintingBoard extends StatelessWidget {
     return OpenContainer(
       closedBuilder: (_, closed) => ScalingWidget(
         child: HomeBody(),
-        height: 450,
-        width: 450,
+        height: 200,
+        width: 200,
       ),
-      openBuilder: (_, open) => ScalingWidget(
-        child: HomeBody(),
-        height: Get.height,
-        width: Get.width,
-      ),
+      openBuilder: (_, open) => PaintingView(),
       closedColor: Colors.transparent,
       closedShape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),

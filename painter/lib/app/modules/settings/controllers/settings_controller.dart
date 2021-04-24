@@ -15,7 +15,7 @@ class SettingsController extends GetxController {
 
   // var to hold the value while it's being changed by the
   // slider, [Obs] to rebuild the widget.
-  var _strokeColor = MyColor(0xff000000).obs;
+  var _strokeColor = MyColor(0xffffffff).obs;
   var _pointsMode = PointMode.points.obs;
   var _strokeWitdth = 5.0.obs;
   //================================= Methods ==================================

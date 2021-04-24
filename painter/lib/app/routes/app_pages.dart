@@ -4,6 +4,8 @@ import 'package:painter/app/modules/colorpicker/bindings/colorpicker_binding.dar
 import 'package:painter/app/modules/colorpicker/views/colorpicker_view.dart';
 import 'package:painter/app/modules/home/bindings/home_binding.dart';
 import 'package:painter/app/modules/home/views/home_view.dart';
+import 'package:painter/app/modules/painting/bindings/painting_binding.dart';
+import 'package:painter/app/modules/painting/views/painting_view.dart';
 import 'package:painter/app/modules/settings/bindings/settings_binding.dart';
 import 'package:painter/app/modules/settings/views/settings_view.dart';
 import 'package:painter/app/modules/test/bindings/test_binding.dart';
@@ -36,6 +38,11 @@ class AppPages {
       name: _Paths.TEST,
       page: () => TestView(),
       binding: TestBinding(),
+    ),
+    GetPage(
+      name: _Paths.PAINTING,
+      page: () => PaintingView(),
+      binding: PaintingBinding(),
     ),
   ];
 }

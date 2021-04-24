@@ -37,6 +37,8 @@ class HomeController extends GetxController {
   // data from stroage
   var _bigList = <Rx<Painting>>[].obs;
 
+  var slidesList = <RxList<Rx<Painting>>>[];
+
   // this will hold the deleted points, for later redoing.
   // this was made into [obs] to allow the 'isRedoActive' to update
   // automagically when the [trashlist] length change
@@ -358,7 +360,8 @@ class HomeController extends GetxController {
     await pageViewController.animateToPage(newPageIndex,
         duration: duration, curve: curve);
   }
-  //============================================================================
 
+  //============================================================================
+  void addNewPaintingSlide() {}
   //============================================================================
 }

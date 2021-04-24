@@ -15,7 +15,7 @@ class MyPaint extends Paint {
     this.strokeWidth = 5.0,
     this.style = PaintingStyle.fill,
     this.strokeCap = StrokeCap.round,
-    this.color = const MyColor(0xff000000),
+    this.color = const MyColor(0xffffffff),
   }) : super();
   //================================= Methods ==================================
   Map<String, dynamic> toJson() => {
