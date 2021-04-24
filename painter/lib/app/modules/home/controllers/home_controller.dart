@@ -46,7 +46,9 @@ class HomeController extends GetxController {
   // this was made into [obs] to allow the 'isRedoActive' to update
   // automagically when the [trashlist] length change
   var _bigList = <RxList<Rx<Painting>>>[<Rx<Painting>>[].obs].obs;
-  var _trashList = <RxList<Rx<Painting>>>[<Rx<Painting>>[].obs].obs;
+  var _trashList = <RxList<Rx<Painting>>>[
+    <Rx<Painting>>[Painting([]).obs].obs
+  ].obs;
 
   // this will be the temp variable to hold the distance between two points
   // [drawn point and eraser]
@@ -161,12 +163,25 @@ class HomeController extends GetxController {
   // lists lengths change.
   // I used 'First' as This will be the last thing to change
   // bool  isUndoActive(paintingController.currentActivePaintingIndex) => _slidesList[paintingController.currentActivePaintingIndex].value.pointsList.isNotEmpty;
-  bool get isUndoActive => _bigList[0].first.value.pointsList.isNotEmpty;
+  bool get isUndoActive =>
+      _bigList[paintingController.currentActivePaintingIndex]
+          .first
+          .value
+          .pointsList
+          .isNotEmpty;
   //============================================================================
 
   bool get isRedoActive =>
-      _trashList[0].first.value.pointsList.isNotEmpty ||
-      _trashList[0].last.value.pointsList.isNotEmpty;
+      (_trashList[paintingController.currentActivePaintingIndex]
+              .first
+              .value
+              .pointsList
+              .isNotEmpty ||
+          _trashList[paintingController.currentActivePaintingIndex]
+              .last
+              .value
+              .pointsList
+              .isNotEmpty);
   // when there are points in trashList and there aren't in pointsList
   //============================================================================
 
