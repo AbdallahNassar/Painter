@@ -5,6 +5,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
 import 'package:painter/app/core/theme/app_colors.dart';
 import 'package:painter/app/data/models/my_offset.dart';
 import 'package:painter/app/data/models/painting.dart';
@@ -42,7 +43,6 @@ class HomeController extends GetxController {
   // _trashList will hold the deleted points, for later redoing.
   // this was made into [obs] to allow the 'isRedoActive' to update
   // automagically when the [trashlist] length change
-
   var _bigList = <RxList<Rx<Painting>>>[<Rx<Painting>>[].obs].obs;
   var _trashList = <RxList<Rx<Painting>>>[<Rx<Painting>>[].obs].obs;
 
@@ -56,7 +56,6 @@ class HomeController extends GetxController {
   //================================= Methods ==================================
   //! This section is for the Controller related Methods [init, close, etc..]
   //============================================================================
-
   @override
   void onInit() {
     super.onInit();
@@ -171,9 +170,13 @@ class HomeController extends GetxController {
     // to only draw in it's specified area [respect appbar and bottom]
     if (point.direction <= 0.0) return;
     // [.obs] classes have a unique ways of updating
-    _bigList[index].last.update((val) {
-      val!.pointsList.add(MyOffset(point.dx, point.dy));
-    });
+    _bigList[index].last.update(
+      (val) {
+        val!.pointsList.add(
+          MyOffset(point.dx, point.dy),
+        );
+      },
+    );
   }
 
   //============================================================================

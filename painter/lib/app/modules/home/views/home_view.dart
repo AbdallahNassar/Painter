@@ -33,7 +33,7 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
           Expanded(
-            flex: 11,
+            flex: 15,
             child: Padding(
               padding: EdgeInsets.only(
                 top: Get.height * 0.035,
@@ -41,7 +41,9 @@ class HomeView extends GetView<HomeController> {
               child: MyPageView(),
             ),
           ),
-          Spacer(),
+          Spacer(
+            flex: 2,
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
