@@ -43,7 +43,8 @@ class HomeController extends GetxController {
   // this was made into [obs] to allow the 'isRedoActive' to update
   // automagically when the [trashlist] length change
 
-  var _bigList, _trashList = <RxList<Rx<Painting>>>[<Rx<Painting>>[].obs].obs;
+  var _bigList = <RxList<Rx<Painting>>>[<Rx<Painting>>[].obs].obs;
+  var _trashList = <RxList<Rx<Painting>>>[<Rx<Painting>>[].obs].obs;
 
   // this will be the temp variable to hold the distance between two points
   // [drawn point and eraser]
@@ -91,7 +92,7 @@ class HomeController extends GetxController {
       //? Case2]  Found data in storage, decode it and parse it.
       else {
         //TODO: hande local storage
-        _bigList = _decodeDataBase(jsonDataBase);
+        // _bigList = _decodeDataBase(jsonDataBase);
       }
     } catch (e) {
       print('Error at [fetchPaintingsFromStorage Method], $e');
@@ -273,7 +274,7 @@ class HomeController extends GetxController {
       _trashList[index].last.value,
     ))
       // if so, take the style of [Painting] of the points in the big list
-      _bigList.add(
+      _bigList[index].add(
         Painting(
           [],
           color: _trashList[index].last.value.color,
@@ -374,8 +375,20 @@ class HomeController extends GetxController {
   //============================================================================
   // this will add a new 'painting' to the home page view
   void addNewPaintingSlide() {
-    _bigList.addIf(_bigList.last.isNotEmpty, <Rx<Painting>>[].obs);
+    _bigList.add(
+      [newPaint.obs].obs,
+    );
   }
 
+  //============================================================================
+  void testMethod() {
+    try {
+      var x = [1, 2].obs;
+      x.addIf(x.isEmpty, 5);
+      print(x);
+    } catch (e) {
+      print('Error @ method $e');
+    }
+  }
   //============================================================================
 }

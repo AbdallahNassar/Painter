@@ -17,12 +17,14 @@ class MyPageView extends StatelessWidget {
   //============================================================================
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      itemCount: 1,
-      controller: homeController.pageViewController,
-      itemBuilder: (context, index) => Padding(
-        padding: EdgeInsets.all(Get.height * 0.015),
-        child: PaintingSlide(index),
+    return Obx(
+      () => PageView.builder(
+        itemCount: homeController.bigList.length,
+        controller: homeController.pageViewController,
+        itemBuilder: (context, index) => Padding(
+          padding: EdgeInsets.all(Get.height * 0.015),
+          child: PaintingSlide(index),
+        ),
       ),
     );
   }

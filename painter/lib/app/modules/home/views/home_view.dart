@@ -48,6 +48,7 @@ class HomeView extends GetView<HomeController> {
         child: Icon(Icons.add),
         // this will add a new slide in the home page
         onPressed: controller.addNewPaintingSlide,
+        // onPressed: controller.testMethod,
       ),
     );
   }
