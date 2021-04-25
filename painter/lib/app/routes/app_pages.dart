@@ -15,6 +15,7 @@ class AppPages {
   static const String HomeName = Routes.HOME;
   static const String SettingsName = Routes.SETTINGS;
   static const String ColorPickerName = Routes.COLORPICKER;
+  static const String PaintingName = Routes.PAINTING;
 
   static final routes = [
     GetPage(

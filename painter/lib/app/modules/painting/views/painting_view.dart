@@ -41,7 +41,7 @@ class PaintingView extends GetView<PaintingController> {
               () => SettingsView(),
               transition: Transition.cupertino,
               duration: Duration(milliseconds: 400),
-              // popGesture: true,
+              popGesture: true,
             ),
           ),
         ],

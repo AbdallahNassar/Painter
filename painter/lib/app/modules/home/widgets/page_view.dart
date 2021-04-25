@@ -56,6 +56,8 @@ class PaintingSlide extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.0),
       ),
       transitionDuration: Duration(milliseconds: 500),
+      closedElevation: 0.0,
+      openElevation: 0.0,
     );
   }
 }

@@ -17,7 +17,6 @@ class HomeBody extends StatelessWidget {
   //============================================================================
   @override
   Widget build(BuildContext context) {
-    print('home body index is $index');
     //================================ Parameters ==============================
     final _homeController = Get.find<HomeController>();
     final _settingsController = Get.find<SettingsController>();
