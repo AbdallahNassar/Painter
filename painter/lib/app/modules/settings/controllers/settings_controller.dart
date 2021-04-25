@@ -54,7 +54,6 @@ class SettingsController extends GetxController {
   //============================================================================
   void setColor(int newColorVal) {
     _strokeColor.value = MyColor(newColorVal);
-
     homeController.makeNewList();
   }
 

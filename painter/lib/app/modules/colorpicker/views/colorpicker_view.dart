@@ -32,7 +32,7 @@ class ColorpickerView extends GetView<SettingsController> {
             Obx(
               () => Text(
                 'color_picker_title'.tr,
-                style: AppTheme.appTheme.appBarTheme.titleTextStyle!.copyWith(
+                style: AppTheme.appTheme.textTheme.headline3!.copyWith(
                   color: controller.strokeColor,
                 ),
                 textAlign: TextAlign.center,
