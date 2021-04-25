@@ -7,7 +7,7 @@ import 'package:painter/app/modules/home/controllers/home_controller.dart';
 class SettingsController extends GetxController {
   //================================ Properties ================================
   // this will be distance to check against for deletion, [the eraser size]
-  var _deleteDistance = 20.0.obs;
+  var _deleteDistance = (Get.height * 0.03).obs;
   // this will be used to communicate with home controller, for example
   // to increment the index of active list, to tell the [Big List] that
   // a change has happened
@@ -44,7 +44,7 @@ class SettingsController extends GetxController {
   double get maxPenSize => 20.0;
 
   //============================================================================
-  void setStrokeWidth(int index, double newVal) {
+  void setStrokeWidth(double newVal) {
     // the index of the [Painting] to make new list in
     // save the new value, to update the widget that observes this var
     _strokeWitdth.value = newVal;
@@ -52,14 +52,13 @@ class SettingsController extends GetxController {
   }
 
   //============================================================================
-  void setColor(int index, int newColorVal) {
-    _strokeColor.value = MyColor(newColorVal);
-
+  void setColor(int newColorVal) {
+    _strokeColor = MyColor(newColorVal).obs;
     homeController.makeNewList();
   }
 
   //============================================================================
-  void setPointMode(int index, PointMode newVal) {
+  void setPointMode(PointMode newVal) {
     _pointsMode.value = newVal;
     homeController.makeNewList();
   }

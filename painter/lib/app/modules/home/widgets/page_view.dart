@@ -51,10 +51,13 @@ class PaintingSlide extends StatelessWidget {
         index: index,
       ),
       closedColor: Colors.transparent,
+      middleColor: Colors.transparent,
       closedShape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),
       transitionDuration: Duration(milliseconds: 500),
+      closedElevation: 0.0,
+      openElevation: 0.0,
     );
   }
 }

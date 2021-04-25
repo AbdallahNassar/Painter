@@ -12,7 +12,7 @@ class AppTheme {
     textTheme: TextTheme(
       button: TextStyle(fontSize: Get.height * 0.04 * Get.textScaleFactor),
       subtitle1: TextStyle(
-        fontSize: Get.height * 0.04 * Get.textScaleFactor,
+        fontSize: Get.height * 0.03 * Get.textScaleFactor,
         fontWeight: FontWeight.bold,
         fontFamily: 'Nunito',
       ),

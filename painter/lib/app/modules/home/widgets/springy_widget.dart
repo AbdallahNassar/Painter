@@ -101,8 +101,8 @@ class _SpringyWidgetState extends State<SpringyWidget>
         // that Align uses which is in range [0,1]
         setState(() {
           _dragAlignment += Alignment(
-            details.delta.dx / (_size.width / 2.3),
-            details.delta.dy / (_size.height / 2.4),
+            details.delta.dx / (_size.width / 2.2),
+            details.delta.dy / (_size.height / 2.3),
           );
         });
 

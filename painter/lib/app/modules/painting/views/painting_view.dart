@@ -42,7 +42,6 @@ class PaintingView extends GetView<PaintingController> {
               transition: Transition.cupertino,
               duration: Duration(milliseconds: 400),
               popGesture: true,
-              arguments: index,
             ),
           ),
         ],
