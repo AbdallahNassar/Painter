@@ -3,12 +3,10 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 import 'package:get/get.dart';
 import 'package:painter/app/core/theme/app_theme.dart';
-import 'package:painter/app/modules/painting/controllers/painting_controller.dart';
 import 'package:painter/app/modules/settings/controllers/settings_controller.dart';
 
 class ColorpickerView extends GetView<SettingsController> {
   //================================ Properties ================================
-  final _paintingController = Get.find<PaintingController>();
 
   //================================= Methods ==================================
   Widget _buildSizedBox(_mediaQuery) {
@@ -45,9 +43,7 @@ class ColorpickerView extends GetView<SettingsController> {
               child: ColorPicker(
                 pickerColor: controller.strokeColor,
                 onColorChanged: (newColor) {
-                  controller.setColor(
-                      _paintingController.currentActivePaintingIndex,
-                      newColor.value);
+                  controller.setColor(newColor.value);
                 },
                 showLabel: true,
                 displayThumbColor: true,

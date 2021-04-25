@@ -51,6 +51,7 @@ class PaintingSlide extends StatelessWidget {
         index: index,
       ),
       closedColor: Colors.transparent,
+      middleColor: Colors.transparent,
       closedShape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),

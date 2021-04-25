@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:painter/app/core/theme/app_theme.dart';
-import 'package:painter/app/modules/painting/controllers/painting_controller.dart';
 import 'package:painter/app/modules/settings/widgets/custom_color_picker.dart';
 import 'package:painter/app/modules/settings/widgets/custom_slider.dart';
 import 'package:painter/app/modules/settings/widgets/pen_types.dart';
@@ -13,7 +12,6 @@ import '../controllers/settings_controller.dart';
 
 class SettingsView extends GetView<SettingsController> {
   //================================ Properties ================================
-  final _paintingController = Get.find<PaintingController>();
 
   //============================================================================
   @override
@@ -86,7 +84,6 @@ class SettingsView extends GetView<SettingsController> {
                     maxValue: controller.maxPenSize,
                     minValue: controller.minPenSize - 1,
                     onChanged: (newVal) => controller.setStrokeWidth(
-                      _paintingController.currentActivePaintingIndex,
                       newVal,
                     ),
                   ),
