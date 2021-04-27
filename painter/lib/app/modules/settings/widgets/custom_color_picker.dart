@@ -20,8 +20,17 @@ class CustomColorPalette extends StatelessWidget {
         },
         closedBuilder: (context, openContainer) {
           return Obx(
-            () => CircleAvatar(
-              backgroundColor: settingsController.strokeColor,
+            () => Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100.0),
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 4.0,
+                ),
+              ),
+              child: CircleAvatar(
+                backgroundColor: settingsController.strokeColor,
+              ),
             ),
           );
         },
