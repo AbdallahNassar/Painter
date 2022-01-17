@@ -45,7 +45,6 @@ class ColorpickerView extends GetView<SettingsController> {
                 onColorChanged: (newColor) {
                   controller.setColor(newColor.value);
                 },
-                showLabel: true,
                 displayThumbColor: true,
                 pickerAreaBorderRadius: BorderRadius.circular(
                   20.0,
