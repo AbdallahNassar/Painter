@@ -6,6 +6,10 @@ Flutter Mobile Application for Android/IOS
 A light weight drawing application, it provides you with a canvas and a pen with some options.
 It enables you to illustrate something to a client, or maybe save a draft for later? 
 Available options:
+
+<img src = "Painter.gif" width = "300" >
+
+# Features:
 - Undo
 - Redo
 - Clear
@@ -16,9 +20,6 @@ Available options:
 - Change Pen Color
 - Change Pen Size
 - Movable Eraser
-
-
-<img src = "Painter.gif" width = "300" >
 
 
 # Concepts Used:
