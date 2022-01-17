@@ -18,7 +18,7 @@ Available options:
 - Movable Eraser
 
 
-<img src = "portrait.gif" width = "300" >
+<img src = "Painter.gif" width = "300" >
 
 
 # Concepts Used:
