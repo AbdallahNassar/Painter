@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:painter/app/core/theme/app_theme.dart';
 import 'package:painter/app/modules/settings/widgets/custom_color_picker.dart';
@@ -23,7 +22,6 @@ class SettingsView extends GetView<SettingsController> {
       appBar: CustomAppBar(
         text: 'settings_view_title'.tr,
         elevation: 0.0,
-        haveBackArrow: true,
       ),
       body: SingleChildScrollView(
         child: Container(

@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'dart:ui';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
 import 'package:painter/app/core/theme/app_colors.dart';
 import 'package:painter/app/data/models/my_offset.dart';
 import 'package:painter/app/data/models/painting.dart';
@@ -99,8 +97,7 @@ class HomeController extends GetxController {
       }
       //? Case2]  Found data in storage, decode it and parse it.
       else {
-        //TODO: hande local storage
-        // _bigList = _decodeDataBase(jsonDataBase);
+        _bigList = _decodeDataBase(jsonDataBase);
       }
     } catch (e) {
       print('Error at [fetchPaintingsFromStorage Method], $e');
@@ -108,22 +105,26 @@ class HomeController extends GetxController {
   }
 
   //============================================================================
-  RxList<Rx<Painting>> _decodeDataBase(String jsonDataBase) {
+  RxList<RxList<Rx<Painting>>> _decodeDataBase(String jsonDataBase) {
     try {
       // convert the 'Json string' into a list of jsonPaintings
       var temp = json.decode(jsonDataBase);
-      var dynamicList =
-          // create a Painting from each jsonPaintig
-          // make it [.obs] for the widgets that listen to it to work properly
-          temp
-              .map((jsonPainting) => Painting.fromJson(jsonPainting).obs)
-              .toList();
-      // typecast it into a list.
-      List<Rx<Painting>> paintingList = List.from(dynamicList);
-      return paintingList.obs;
+
+      var paintingList = RxList<RxList<Rx<Painting>>>.from(
+        temp.map(
+          (jsonPaintingList) => List<Rx<Painting>>.from(
+            jsonPaintingList.map(
+              (jsonPainting) => Painting.fromJson(jsonPainting).obs,
+            ),
+          ).obs,
+        ),
+      );
+      return paintingList;
     } catch (e) {
       print('Error at [decodeDataBase Method], $e');
-      return <Rx<Painting>>[Painting([]).obs].obs;
+      return [
+        <Rx<Painting>>[Painting([]).obs].obs
+      ].obs;
     }
   }
 
@@ -443,14 +444,12 @@ class HomeController extends GetxController {
   // this will add a new 'painting' to the home page view
   void addNewPaintingSlide() {
     // add a new [painting] to the painting slides
-    _bigList.addIf(
-      _bigList.last.last.value.pointsList.isNotEmpty,
+    _bigList.add(
       [newPaint.obs].obs,
     );
     // add a new [painting] to the trash list, to correspond with the slides
     // e.g. Each [painting] has a corresponding [ Painting Trash List Entry]
-    _trashList.addIf(
-      _trashList.last.last.value.pointsList.isNotEmpty,
+    _trashList.add(
       [newPaint.obs].obs,
     );
   }

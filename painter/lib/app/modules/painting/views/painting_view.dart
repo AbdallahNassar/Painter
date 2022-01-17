@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:painter/app/core/theme/app_colors.dart';
 import 'package:painter/app/modules/home/controllers/home_controller.dart';
 import 'package:painter/app/modules/home/widgets/custom_fab.dart';
 import 'package:painter/app/modules/home/widgets/home_body.dart';
 import 'package:painter/app/modules/home/widgets/scaling_widget.dart';
-import 'package:painter/app/modules/settings/views/settings_view.dart';
+import 'package:painter/app/routes/app_pages.dart';
 import 'package:painter/app/widgets/custom_app_bar.dart';
 
 import '../controllers/painting_controller.dart';
@@ -37,12 +36,13 @@ class PaintingView extends GetView<PaintingController> {
         actions: [
           IconButton(
             icon: Icon(Icons.settings),
-            onPressed: () async => await Get.to(
-              () => SettingsView(),
-              transition: Transition.cupertino,
-              duration: Duration(milliseconds: 400),
-              popGesture: true,
-            ),
+            onPressed: () async {
+              if (Get.currentRoute == Routes.SETTINGS) {
+                Get.back();
+              } else {
+                await Get.toNamed(Routes.SETTINGS);
+              }
+            },
           ),
         ],
         elevation: 0.0,

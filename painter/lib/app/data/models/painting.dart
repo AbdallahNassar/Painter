@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
-
 import 'my_color.dart';
 import 'my_offset.dart';
 import 'my_paint.dart';
